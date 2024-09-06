@@ -20,15 +20,19 @@ const SubmitRecording = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                value={audioUrl}
-                onChange={(e) => setAudioUrl(e.target.value)}
-                placeholder="Enter audio URL"
-            />
-            <button type="submit">Submit</button>
-        </form>
+        <div>
+            <h1>Proses Rekaman</h1>
+            <p>Ikuti panduan visual dan audio berikut untuk melakukan rekaman...</p>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={audioUrl}
+                    onChange={(e) => setAudioUrl(e.target.value)}
+                    placeholder="Enter audio URL"
+                />
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     );
 };
 

@@ -12,7 +12,6 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Lakukan request ke backend untuk login
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
@@ -30,7 +29,6 @@ const LoginForm = () => {
                 history.push('/instructor-dashboard');
             }
         } else {
-            // Tangani error login
             console.error(data.message);
         }
     };
@@ -66,6 +64,10 @@ const LoginForm = () => {
                 </label>
             </div>
             <button type="submit">Login</button>
+            <div>
+                <p>Don't have an account? <a href="/register">Register here</a></p>
+                <p><a href="/forgot-password">Forgot Password?</a></p>
+            </div>
         </form>
     );
 };

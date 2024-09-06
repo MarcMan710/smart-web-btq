@@ -1,6 +1,7 @@
 // backend/controllers/authController.js
 const User = require('../models/User');
 const { hashPassword, generateToken } = require('../utils/auth');
+const { sendConfirmationEmail } = require('../utils/emailService');
 
 const registerUser = async (req, res) => {
     const { firstName, lastName, username, email, password, confirmPassword } = req.body;
@@ -29,11 +30,14 @@ const registerUser = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role: 'student',  // Ubah dari 'user' menjadi 'student'
+            role: 'student',
             level: 1
         });
 
         await user.save();
+
+        // Send confirmation email
+        await sendConfirmationEmail(user);
 
         const token = generateToken(user);
 

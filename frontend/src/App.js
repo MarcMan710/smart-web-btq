@@ -1,6 +1,8 @@
 // frontend/src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -14,6 +16,7 @@ import NotFound from './pages/NotFound';
 import InstructionPage from './pages/InstructionPage';
 import SubmitRecording from './pages/SubmitRecording';
 import PrivateRoute from './components/PrivateRoute';
+import MonitorPage from './pages/MonitorPage';
 import About from './pages/About';
 
 const App = () => {
@@ -32,11 +35,13 @@ const App = () => {
                         <Route path="/instructions" component={InstructionPage} />
                         <Route path="/submit-recording" component={SubmitRecording} />
                         <PrivateRoute path="/dashboard" component={Dashboard} />
+                        <PrivateRoute path="/monitor" component={MonitorPage} />
                         <Route path="/about" component={About} />
                         <Route component={NotFound} />
                     </Switch>
                 </main>
                 <Footer />
+                <ToastContainer />
             </div>
         </Router>
     );

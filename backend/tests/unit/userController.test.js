@@ -1,65 +1,135 @@
-const request = require('supertest');
-const express = require('express');
-const { getUserProfile, updateUserProfile, getUserProgress } = require('../controllers/userController');
-const User = require('../models/User');
-const Recording = require('../models/Recording');
-const bcrypt = require('bcryptjs');
-
-const app = express();
-app.use(express.json());
-app.get('/api/user/profile', getUserProfile);
-app.put('/api/user/profile', updateUserProfile);
-app.get('/api/user/progress', getUserProgress);
-
-jest.mock('../models/User');
-jest.mock('../models/Recording');
-jest.mock('bcryptjs');
+const { getUserProfile } = require('../../controllers/userController.js');
+const User = require('../../models/User.js');
+const httpMocks = require('node-mocks-http');
 
 describe('User Controller', () => {
-    describe('getUserProfile', () => {
-        it('should return the user profile excluding the password field when a valid user ID is provided', async () => {
-            const mockUser = { _id: '1', name: 'John Doe', email: 'john@example.com', password: 'hashedpassword' };
-            User.findById.mockResolvedValueOnce(mockUser);
-
-            const res = await request(app)
-                .get('/api/user/profile')
-                .set('Authorization', 'Bearer validtoken');
-
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual({ _id: '1', name: 'John Doe', email: 'john@example.com' });
+    it('should return user profile when user exists', async () => {
+        const req = httpMocks.createRequest({
+            user: { id: '123' }
         });
+        const res = httpMocks.createResponse();
+        const user = { id: '123', name: 'John Doe', email: 'john@example.com' };
+    
+        const selectMock = jest.fn().mockResolvedValue(user);
+        User.findById = jest.fn().mockReturnValue({ select: selectMock });
+    
+        await getUserProfile(req, res);
+    
+        expect(User.findById).toHaveBeenCalledWith('123');
+        expect(selectMock).toHaveBeenCalledWith('-password');
+        expect(res.statusCode).toBe(200);
+        expect(res._getJSONData()).toEqual(user);
     });
 
-    describe('updateUserProfile', () => {
-        it('should update the user\'s name, email, and password when valid data is provided', async () => {
-            const mockUser = { _id: '1', name: 'John Doe', email: 'john@example.com', password: 'hashedpassword', save: jest.fn() };
-            User.findById.mockResolvedValueOnce(mockUser);
-            bcrypt.genSalt.mockResolvedValueOnce('salt');
-            bcrypt.hash.mockResolvedValueOnce('newhashedpassword');
-
-            const res = await request(app)
-                .put('/api/user/profile')
-                .send({ name: 'Jane Doe', email: 'jane@example.com', password: 'newpassword' })
-                .set('Authorization', 'Bearer validtoken');
-
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual({ id: '1', name: 'Jane Doe', email: 'jane@example.com' });
-            expect(mockUser.name).toBe('Jane Doe');
-            expect(mockUser.email).toBe('jane@example.com');
-            expect(mockUser.password).toBe('newhashedpassword');
+    it('should return 404 when user is not found', async () => {
+        const req = httpMocks.createRequest({
+            user: { id: '123' }
         });
-    });
-
-    describe('getUserProgress', () => {
-        it('should return a 404 status with a "User not found" message when the user ID does not exist', async () => {
-            User.findById.mockResolvedValueOnce(null);
-
-            const res = await request(app)
-                .get('/api/user/progress')
-                .set('Authorization', 'Bearer validtoken');
-
-            expect(res.status).toBe(404);
-            expect(res.body.message).toBe('User not found');
-        });
+        const res = httpMocks.createResponse();
+    
+        const selectMock = jest.fn().mockResolvedValue(null);
+        User.findById = jest.fn().mockReturnValue({ select: selectMock });
+    
+        await getUserProfile(req, res);
+    
+        expect(User.findById).toHaveBeenCalledWith('123');
+        expect(selectMock).toHaveBeenCalledWith('-password');
+        expect(res.statusCode).toBe(404);
+        expect(res._getJSONData()).toEqual({ message: 'User not found' });
     });
 });
+
+    // Successfully retrieves user progress when valid user ID is provided
+    it('should return user progress when valid user ID is provided', async () => {
+        const req = { user: { id: 'validUserId' } };
+        const res = { json: jest.fn() };
+        const progressData = [{ progress: 'data' }];
+    
+        Progress.find = jest.fn().mockResolvedValue(progressData);
+    
+        await getUserProgress(req, res);
+    
+        expect(Progress.find).toHaveBeenCalledWith({ user: 'validUserId' });
+        expect(res.json).toHaveBeenCalledWith(progressData);
+    });
+
+        // User ID does not exist in the database
+    it('should return empty array when user ID does not exist in the database', async () => {
+        const req = { user: { id: 'nonExistentUserId' } };
+        const res = { json: jest.fn() };
+    
+        Progress.find = jest.fn().mockResolvedValue([]);
+    
+        await getUserProgress(req, res);
+    
+        expect(Progress.find).toHaveBeenCalledWith({ user: 'nonExistentUserId' });
+        expect(res.json).toHaveBeenCalledWith([]);
+    });
+
+    // Successfully updates user profile with valid name, email, and password
+    it('should update user profile with valid name, email, and password', async () => {
+        const req = {
+            body: { name: 'New Name', email: 'newemail@example.com', password: 'newpassword' },
+            user: { id: 'userId123' }
+        };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn()
+        };
+        const user = {
+            _id: 'userId123',
+            name: 'Old Name',
+            email: 'oldemail@example.com',
+            save: jest.fn().mockResolvedValue({
+                _id: 'userId123',
+                name: 'New Name',
+                email: 'newemail@example.com'
+            })
+        };
+        User.findById = jest.fn().mockResolvedValue(user);
+        bcrypt.genSalt = jest.fn().mockResolvedValue('salt');
+        bcrypt.hash = jest.fn().mockResolvedValue('hashedpassword');
+
+        await updateUserProfile(req, res);
+
+        expect(User.findById).toHaveBeenCalledWith('userId123');
+        expect(bcrypt.genSalt).toHaveBeenCalledWith(10);
+        expect(bcrypt.hash).toHaveBeenCalledWith('newpassword', 'salt');
+        expect(user.save).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith({
+            id: 'userId123',
+            name: 'New Name',
+            email: 'newemail@example.com'
+        });
+    });
+
+    // User not found in the database
+    it('should return 404 when user is not found', async () => {
+        const req = {
+            body: { name: 'New Name', email: 'newemail@example.com', password: 'newpassword' },
+            user: { id: 'userId123' }
+        };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn()
+        };
+        User.findById = jest.fn().mockResolvedValue(null);
+
+        await updateUserProfile(req, res);
+
+        expect(User.findById).toHaveBeenCalledWith('userId123');
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({ message: 'User not found' });
+    });
+
+        // User logs out successfully and receives a success message
+    it('should return success message when user logs out successfully', () => {
+        const req = {};
+        const res = {
+            json: jest.fn()
+        };
+        logoutUser(req, res);
+        expect(res.json).toHaveBeenCalledWith({ message: 'User logged out successfully' });
+    });

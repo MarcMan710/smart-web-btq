@@ -1,6 +1,7 @@
 // frontend/src/pages/Home.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer'; // Tambahkan impor untuk Footer
 
 const Home = () => {
     return (
@@ -17,6 +18,7 @@ const Home = () => {
             <section>
                 <img src="path/to/your/banner/image.jpg" alt="App Banner" style={{ width: '100%', height: 'auto' }} />
             </section>
+            <Footer /> {/* Tambahkan Footer di sini */}
         </div>
     );
 };

@@ -1,14 +1,18 @@
 // frontend/src/pages/MonitorPage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import RecordingDetailModal from '../components/RecordingDetailModal';
 
 const MonitorPage = () => {
     const [students, setStudents] = useState([]);
+    const [filter, setFilter] = useState('');
+    const [sort, setSort] = useState('date');
+    const [selectedRecording, setSelectedRecording] = useState(null);
 
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const res = await axios.get('/api/users/students'); // Assuming this endpoint returns all students
+                const res = await axios.get('/api/instructors/students');
                 setStudents(res.data);
             } catch (err) {
                 console.error(err.message);
@@ -18,29 +22,87 @@ const MonitorPage = () => {
         fetchStudents();
     }, []);
 
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    };
+
+    const handleSortChange = (e) => {
+        setSort(e.target.value);
+    };
+
+    const handleRecordingClick = (recording) => {
+        setSelectedRecording(recording);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedRecording(null);
+    };
+
+    const handleReprocessRecording = async (id) => {
+        try {
+            await axios.post(`/api/recordings/${id}/reprocess`);
+            // Refresh data if needed
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    const handleApproveRecording = async (id, score, feedback) => {
+        try {
+            await axios.post(`/api/recordings/${id}/approve`, { score, feedback });
+            // Refresh data if needed
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    const filteredStudents = students
+        .filter(student => student.status.includes(filter))
+        .sort((a, b) => {
+            if (sort === 'date') {
+                return new Date(b.date) - new Date(a.date);
+            } else if (sort === 'score') {
+                return b.aiResult.score - a.aiResult.score;
+            }
+            return 0;
+        });
+
     return (
         <div>
             <h1>Monitor Pengguna</h1>
-            {students.map(student => (
-                <div key={student.id}>
-                    <h2>{student.name}</h2>
-                    <p>Role: {student.role}</p>
-                    <p>Level: {student.level}</p>
-                    <h3>Recording History</h3>
-                    <ul>
-                        {student.recordings.map(record => (
-                            <li key={record.id}>
-                                <p>Audio URL: {record.audioUrl}</p>
-                                <p>AI Result: {record.aiResult.score || record.aiResult.error}</p>
-                                <p>Passed: {record.passed ? 'Yes' : 'No'}</p>
-                                <p>Status: {record.status}</p>
-                                <p>Instructor Review: {record.instructorReview}</p>
-                                <p>Date: {new Date(record.date).toLocaleString()}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            <div>
+                <label>
+                    Filter by status:
+                    <input type="text" value={filter} onChange={handleFilterChange} />
+                </label>
+                <label>
+                    Sort by:
+                    <select value={sort} onChange={handleSortChange}>
+                        <option value="date">Date</option>
+                        <option value="score">Score</option>
+                    </select>
+                </label>
+            </div>
+            <ul>
+                {filteredStudents.map(student => (
+                    <li key={student.id} onClick={() => handleRecordingClick(student.recording)}>
+                        <p>Nama: {student.name}</p>
+                        <p>AI Result: {student.aiResult.score || student.aiResult.error}</p>
+                        <p>Passed: {student.passed ? 'Yes' : 'No'}</p>
+                        <p>Status: {student.status}</p>
+                        <p>Instructor Review: {student.instructorReview}</p>
+                        <p>Date: {new Date(student.date).toLocaleString()}</p>
+                    </li>
+                ))}
+            </ul>
+            {selectedRecording && (
+                <RecordingDetailModal
+                    recording={selectedRecording}
+                    onClose={handleCloseModal}
+                    onReprocess={handleReprocessRecording}
+                    onApprove={handleApproveRecording}
+                />
+            )}
         </div>
     );
 };
