@@ -1,12 +1,11 @@
-// frontend/src/components/HafalanModal.js
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Updated import
 
 const HafalanModal = ({ hafalan, onClose }) => {
-    const history = useHistory();
+    const navigate = useNavigate(); // Updated from useHistory to useNavigate
 
     const handleStartHafalan = () => {
-        history.push(`/recording/${hafalan._id}`);
+        navigate(`/recording/${hafalan._id}`); // Updated from history.push to navigate
     };
 
     return (

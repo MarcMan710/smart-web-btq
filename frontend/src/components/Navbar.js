@@ -1,11 +1,11 @@
 // frontend/src/components/Navbar.js
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 
 const Navbar = () => {
     const [role, setRole] = useState(null);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserRole = async () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
         // Hapus token autentikasi dari local storage
         localStorage.removeItem('authToken');
         // Arahkan pengguna ke halaman login
-        history.push('/login');
+        navigate.push('/login');
     };
 
     return (

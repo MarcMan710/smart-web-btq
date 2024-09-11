@@ -1,13 +1,13 @@
 // frontend/pages/Login.js
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const history = useHistory();
+    const navigate  = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,7 +15,7 @@ const Login = () => {
         try {
             const res = await axios.post('/api/auth/login', { email, password, rememberMe });
             localStorage.setItem('token', res.data.token);
-            history.push('/dashboard');
+            navigate.push('/dashboard');
         } catch (err) {
             console.error(err.response.data.message);
         }

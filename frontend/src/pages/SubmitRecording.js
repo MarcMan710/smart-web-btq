@@ -1,18 +1,18 @@
 // frontend/src/pages/SubmitRecording.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SubmitRecording = () => {
     const [audioUrl, setAudioUrl] = useState('');
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post('/api/recordings', { audioUrl });
             alert('Selesai melakukan rekaman');
-            history.push('/dashboard');
+            navigate.push('/dashboard');
         } catch (err) {
             console.error(err.message);
             alert('Terjadi kesalahan, coba lagi nanti.');

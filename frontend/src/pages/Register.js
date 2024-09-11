@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Register = () => {
@@ -12,7 +12,7 @@ const Register = () => {
         confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
-    const history = useHistory();
+    const navigate  = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,7 +54,7 @@ const Register = () => {
             const response = await axios.post('/api/auth/register', formData);
             if (response.status === 201) {
                 // Redirect to Dashboard
-                history.push('/dashboard');
+                navigate.push('/dashboard');
             }
         } catch (error) {
             console.error('Registration failed:', error.response.data.message);

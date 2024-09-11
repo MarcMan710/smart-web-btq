@@ -57,7 +57,6 @@ const registerUser = async (req, res) => {
     }
 };
 
-// backend/controllers/authController.js 
 const loginUser = async (req, res) => {
     const { email, password, rememberMe } = req.body;
 

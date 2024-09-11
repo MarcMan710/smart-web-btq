@@ -1,12 +1,12 @@
 // frontend/src/pages/InstructionPage.js
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const InstructionPage = () => {
-    const history = useHistory();
+    const navigate  = useNavigate();
 
     const handleStart = () => {
-        history.push('/submit-recording');
+        navigate.push('/submit-recording');
     };
 
     return (

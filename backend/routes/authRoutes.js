@@ -18,5 +18,3 @@ router.get('/dashboard', protect, (req, res) => {
 });
 
 module.exports = router;
-
-module.exports = router;

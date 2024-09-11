@@ -1,7 +1,6 @@
-// frontend/src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Updated import
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -25,20 +24,20 @@ const App = () => {
             <div>
                 <Navbar />
                 <main>
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/register" component={Register} />
-                        <PrivateRoute path="/profile" component={Profile} />
-                        <Route path="/hafalan" component={HafalanPage} />
-                        <Route path="/recording/:id" component={RecordingPage} />
-                        <Route path="/instructions" component={InstructionPage} />
-                        <Route path="/submit-recording" component={SubmitRecording} />
-                        <PrivateRoute path="/dashboard" component={Dashboard} />
-                        <PrivateRoute path="/monitor" component={MonitorPage} />
-                        <Route path="/about" component={About} />
-                        <Route component={NotFound} />
-                    </Switch>
+                    <Routes> {/* Updated from Switch to Routes */}
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/profile" element={<PrivateRoute component={Profile} />} />
+                        <Route path="/hafalan" element={<HafalanPage />} />
+                        <Route path="/recording/:id" element={<RecordingPage />} />
+                        <Route path="/instructions" element={<InstructionPage />} />
+                        <Route path="/submit-recording" element={<SubmitRecording />} />
+                        <Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />
+                        <Route path="/monitor" element={<PrivateRoute component={MonitorPage} />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
                 </main>
                 <Footer />
                 <ToastContainer />
