@@ -68,7 +68,7 @@ const Login = () => {
                             id="rememberMeCheckbox"
                             className='px-2 py-1 rounded-md'
                         />
-                        <label for="rememberMeCheckbox">Remember Me</label>
+                        <label htmlFor="rememberMeCheckbox">Remember Me</label>
                     </div>
                     <button className='w-full font-bold text-nwhite1 bg-nblue4 py-2 rounded-full hover:bg-nblue1' type="submit">Login</button>
                 </div>
