@@ -18,7 +18,7 @@ const Home = () => {
             <section>
                 <img src="path/to/your/banner/image.jpg" alt="App Banner" style={{ width: '100%', height: 'auto' }} />
             </section>
-            <Footer /> {/* Tambahkan Footer di sini */}
+            {/* <Footer /> */}{/* Tambahkan Footer di sini */}
         </div>
     );
 };
