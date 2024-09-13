@@ -1,5 +1,10 @@
 /* frontend/src/index.css */
 
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset some default browser styles */
 * {
     margin: 0;
