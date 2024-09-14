@@ -45,38 +45,69 @@ const Profile = () => {
     };
 
     return (
-        <div>
-            <h1>Profile Page</h1>
+        <div className='flex flex-col items-center text-nblack4 space-y-6 mt-6 mb-32'>
+            <h1 className='font-bold text-4xl'>Profile Page</h1>
             <form onSubmit={handleSubmit}>
-                <label>
-                    First Name:
-                    <input type="text" name="firstName" value={userData.firstName} onChange={handleChange} />
-                </label>
-                <label>
-                    Last Name:
-                    <input type="text" name="lastName" value={userData.lastName} onChange={handleChange} />
-                </label>
-                <label>
-                    Level:
-                    <input type="text" name="level" value={userData.level} readOnly />
-                </label>
-                <label>
-                    Role:
-                    <input type="text" name="role" value={userData.role} readOnly />
-                </label>
-                <label>
-                    Username:
-                    <input type="text" name="username" value={userData.username} readOnly />
-                </label>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={userData.email} readOnly />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" value={userData.password} readOnly />
-                </label>
-                <button type="submit">Update Profile</button>
+                <div className='flex flex-col space-y-4 w-[340px]'>
+                    {/* Reformatted for easier styling */}
+                    {/* <label>
+                        First Name:
+                        <input type="text" name="firstName" value={userData.firstName} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Last Name:
+                        <input type="text" name="lastName" value={userData.lastName} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Level:
+                        <input type="text" name="level" value={userData.level} readOnly />
+                    </label>
+                    <label>
+                        Role:
+                        <input type="text" name="role" value={userData.role} readOnly />
+                    </label>
+                    <label>
+                        Username:
+                        <input type="text" name="username" value={userData.username} readOnly />
+                    </label>
+                    <label>
+                        Email:
+                        <input type="email" name="email" value={userData.email} readOnly />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="password" name="password" value={userData.password} readOnly />
+                    </label> */}
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='firstName'>First Name:</label>
+                        <input className='px-2 py-1 rounded-md' type="text" name="firstName" id='firstName' value={userData.firstName} onChange={handleChange} />
+                    </div>
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='lastName'>Last Name:</label>
+                        <input className='px-2 py-1 rounded-md' type="text" name="lastName" id='lastName' value={userData.lastName} onChange={handleChange} />
+                    </div>
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='level'>Level:</label>
+                        <input className='px-2 py-1 rounded-md' type="text" name="level" id='level' value={userData.level} readOnly />
+                    </div>
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='role'>Role:</label>
+                        <input className='px-2 py-1 rounded-md' type="text" name="role" id='role' value={userData.role} readOnly />
+                    </div>
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='username'>Username:</label>
+                        <input className='px-2 py-1 rounded-md' type="text" name="username" id='username' value={userData.username} readOnly />
+                    </div>
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='email'>Email:</label>
+                        <input className='px-2 py-1 rounded-md' type="email" name="email" id='email' value={userData.email} readOnly />
+                    </div>
+                    <div className='flex justify-between space-x-1'>
+                        <label htmlFor='password'>Password:</label>
+                        <input className='px-2 py-1 rounded-md' type="password" name="password" id='password' value={userData.password} readOnly />
+                    </div>
+                </div>
+                <button className='w-[340px] mt-8 font-bold text-nwhite1 bg-nblue4 py-2 rounded-full hover:bg-nblue1' type="submit">Update Profile</button>
             </form>
         </div>
     );
