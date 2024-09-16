@@ -85,8 +85,7 @@ Once both the backend and frontend servers are running, you can access the appli
 
 Create a `.env` file in the backend directory and add the following variables:
 
-Copy
-Insert
-
-PORT=5000 MONGO_URI=your_mongodb_connection_string JWT_SECRET=your_jwt_secret
+PORT=5000 
+MONGO_URI=your_mongodb_connection_string 
+JWT_SECRET=your_jwt_secret
 
