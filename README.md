@@ -59,14 +59,6 @@ Welcome to Smart Web BTQ, a web application designed to provide a seamless exper
 
 Once both the backend and frontend servers are running, you can access the application by navigating to `http://localhost:3000` in your web browser.
 
-## Project Structure
-
-Copy
-Insert
-
-. ├── backend │ ├── config │ │ └── db.js │ ├── middleware │ │ └── errorMiddleware.js │ ├── routes │ │ ├── authRoutes.js │ │ ├── userRoutes.js │ │ ├── recordingRoutes.js │ │ └── hafalanRoutes.js │ ├── server.js │ └── .env ├── frontend │ ├── public │ │ ├── index.html │ │ └── ... │ ├── src │ │ ├── components │ │ │ └── Footer.js │ │ ├── pages │ │ │ └── About.js │ │ └── ... │ └── ... └── README.md
-
-
 ## API Endpoints
 
 ### Authentication
