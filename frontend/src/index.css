@@ -1,7 +1,12 @@
 /* frontend/src/index.css */
 
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset some default browser styles */
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,17 +19,17 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-}
+} */
 
 /* Container class for general layout */
-.container {
+/* .container {
     width: 80%;
     margin: auto;
     overflow: hidden;
-}
+} */
 
 /* Header styles */
-header {
+/* header {
     background: #333;
     color: #fff;
     padding-top: 30px;
@@ -47,19 +52,19 @@ header ul {
 header li {
     display: inline;
     padding: 0 20px 0 20px;
-}
+} */
 
 /* Footer styles */
-footer {
+/* footer {
     background: #333;
     color: #fff;
     text-align: center;
     padding: 10px;
     margin-top: 20px;
-}
+} */
 
 /* Button styles */
-button {
+/* button {
     display: inline-block;
     background: #77aaff;
     color: #fff;
@@ -72,7 +77,7 @@ button {
 
 button:hover {
     background: #555;
-}
+} */
 
 /* Progress bar styles */
 .progress-bar {

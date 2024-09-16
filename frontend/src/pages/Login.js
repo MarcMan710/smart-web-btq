@@ -7,7 +7,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const navigate  = useNavigate();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,41 +22,59 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
+        <div className='flex flex-col items-center space-y-6 my-28 text-nblack4'>
+            <h1 className='text-4xl font-bold'>
+                Login
+            </h1>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>
+                {/* Flex container */}
+                <div className='flex flex-col space-y-4 w-[340px]'>
+                    <div className='flex items-center justify-between space-x-2'>
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className='px-2 py-1 rounded-md'
+                        />
+                    </div>
+                    <div className='flex items-center justify-between space-x-2'>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className='px-2 py-1 rounded-md'
+                        />
+                    </div>
+                    {/* Reformatted for easier styling */}
+                    {/* <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
+                            />
+                            Remember Me
+                        </label>
+                    </div> */}
+                    <div className='flex items-center justify-center space-x-2'>
                         <input
                             type="checkbox"
                             checked={rememberMe}
                             onChange={(e) => setRememberMe(e.target.checked)}
+                            id="rememberMeCheckbox"
+                            className='px-2 py-1 rounded-md'
                         />
-                        Remember Me
-                    </label>
+                        <label htmlFor="rememberMeCheckbox">Remember Me</label>
+                    </div>
+                    <button className='w-full font-bold text-nwhite1 bg-nblue4 py-2 rounded-full hover:bg-nblue1' type="submit">Login</button>
                 </div>
-                <button type="submit">Login</button>
             </form>
             <p>
-                Belum punya akun? <a href="/register">Register</a>
+                Belum punya akun? <a className='font-bold text-nblue4 hover:text-nblue3' href="/register">Register</a>
             </p>
         </div>
     );
