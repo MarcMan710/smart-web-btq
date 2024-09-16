@@ -15,4 +15,8 @@ router.get('/:id', protect, getHafalanDetails);
 // Create or update a hafalan (admin only)
 router.post('/', protect, admin, createOrUpdateHafalan);
 
+// DELETE /api/hafalan/:id
+// Delete a specific hafalan (admin only)
+router.delete('/:id', protect, admin, deleteHafalan);
+
 module.exports = router;

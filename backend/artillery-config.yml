@@ -1,0 +1,28 @@
+config:
+  target: 'http://localhost:5000' # Replace with your app's base URL
+  phases:
+    - duration: 60  # Duration of the test in seconds
+      arrivalRate: 10  # Number of new virtual users per second
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+
+scenarios:
+  - name: 'Submit Recording'
+    flow:
+      - post:
+          url: '/api/recordings'
+          json:
+            audioUrl: 'http://example.com/audio.mp3'
+
+  - name: 'Approve Recording'
+    flow:
+      - put:
+          url: '/api/recordings/1/approve'
+          json:
+            score: 85
+
+  - name: 'Reprocess Recording'
+    flow:
+      - put:
+          url: '/api/recordings/1/reprocess'

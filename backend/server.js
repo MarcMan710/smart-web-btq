@@ -9,7 +9,10 @@ const hafalanRoutes = require('./routes/hafalanRoutes');
 dotenv.config();
 
 // Connect to the database
-connectDB();
+connectDB().catch(err => {
+    winston.error(`Database connection failed: ${err.message}`);
+    process.exit(1);
+});
 
 // Initialize Express
 const app = express();

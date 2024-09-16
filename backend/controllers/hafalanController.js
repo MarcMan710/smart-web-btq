@@ -55,3 +55,17 @@ exports.createOrUpdateHafalan = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+exports.deleteHafalan = async (req, res) => {
+    try {
+        const hafalan = await Hafalan.findById(req.params.id);
+        if (!hafalan) {
+            return res.status(404).json({ message: 'Hafalan not found' });
+        }
+        await hafalan.remove();
+        res.json({ message: 'Hafalan removed' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+};
