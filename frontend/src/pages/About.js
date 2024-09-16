@@ -12,7 +12,7 @@ const About = () => {
             <p>Nama: John Doe</p>
             <p>Email: john.doe@example.com</p>
             
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 };
