@@ -50,7 +50,7 @@ const RecordingDetailModal = ({ recording, onClose, onReprocess, onApprove }) =>
                     <label htmlFor='feedback'>Feedback:</label>
                     <textarea className='px-2 py-1 rounded-md w-[45ch] h-[14ch]' id='feedback' value={feedback} onChange={(e) => setFeedback(e.target.value)} />
                 </div>
-                <div>
+                <div className='flex space-x-2'>
                     <button className='font-semibold text-nwhite1 bg-nblue4 py-1 px-4 rounded-full hover:bg-nblue1' onClick={handleApprove}>Beri Nilai</button>
                     <button className='font-semibold text-nwhite1 bg-nblue4 py-1 px-4 rounded-full hover:bg-nblue1' onClick={handleReprocess}>Hapus Penilaian AI</button>
                     <button className='font-semibold bg-nwhite2 py-1 px-4 rounded-full hover:bg-nwhite3' onClick={onClose}>Kembali</button>
