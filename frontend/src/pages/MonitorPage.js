@@ -68,9 +68,10 @@ const MonitorPage = () => {
         });
 
     return (
-        <div>
-            <h1>Monitor Pengguna</h1>
-            <div>
+        <div className='flex flex-col items-center px-6 py-10 text-nblack4'>
+            <h1 className='font-bold text-4xl mb-4'>Monitor Pengguna</h1>
+            {/* Reformatted for easier styling */}
+            {/* <div>
                 <label>
                     Filter by status:
                     <input type="text" value={filter} onChange={handleFilterChange} />
@@ -82,10 +83,23 @@ const MonitorPage = () => {
                         <option value="score">Score</option>
                     </select>
                 </label>
+            </div> */}
+            <div className='flex flex-col mb-4'>
+                <div className='flex items-center space-x-2 mb-1'>
+                    <label htmlFor='filter'>Filter by status:</label>
+                    <input className='px-2 py-1 rounded-md' type="text" id='filter' value={filter} onChange={handleFilterChange} />
+                </div>
+                <div className='flex items-center space-x-2'>
+                    <label htmlFor='sort'>Sort by:</label>
+                    <select id='sort' value={sort} onChange={handleSortChange}>
+                        <option value="date">Date</option>
+                        <option value="score">Score</option>
+                    </select>
+                </div>
             </div>
-            <ul>
+            <ul className='flex flex-col items-center space-y-6'>
                 {filteredStudents.map(student => (
-                    <li key={student.id} onClick={() => handleRecordingClick(student.recording)}>
+                    <li className='p-6 bg-nwhite2 shadow-md w-[45ch]' key={student.id} onClick={() => handleRecordingClick(student.recording)}>
                         <p>Nama: {student.name}</p>
                         <p>AI Result: {student.aiResult.score || student.aiResult.error}</p>
                         <p>Passed: {student.passed ? 'Yes' : 'No'}</p>

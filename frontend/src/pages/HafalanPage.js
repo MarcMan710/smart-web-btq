@@ -25,9 +25,9 @@ const HafalanPage = () => {
     };
 
     return (
-        <div>
-            <h1>Halaman Hafalan</h1>
-            <div className="hafalan-cards">
+        <div className='flex flex-col items-center px-6 py-32 text-nblack4'>
+            <h1 className='font-bold text-4xl mb-4'>Halaman Hafalan</h1>
+            <div className="flex flex-col space-y-6">
                 {hafalanList.map(hafalan => (
                     <HafalanCard key={hafalan._id} hafalan={hafalan} onClick={() => handleCardClick(hafalan)} />
                 ))}
