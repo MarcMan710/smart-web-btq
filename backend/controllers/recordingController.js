@@ -1,4 +1,5 @@
 // backend/controllers/recordingController.js
+// Importing required models and utilities
 const Recording = require('../models/Recording');
 const User = require('../models/User');
 const { processRecording } = require('../utils/aiHelper');
@@ -32,6 +33,7 @@ const updateRecordingStatus = async (recording, status, aiResult = null, passed 
     await recording.save();
 };
 
+// Controller function to submit a new recording
 exports.submitRecording = async (req, res) => {
     const { audioUrl } = req.body;
     let recording;
@@ -68,6 +70,7 @@ exports.submitRecording = async (req, res) => {
     }
 };
 
+// Controller function to reprocess a recording
 exports.reprocessRecording = async (req, res) => {
     const recording = await findRecordingById(req.params.id, res);
     if (!recording) return;
@@ -85,6 +88,7 @@ exports.reprocessRecording = async (req, res) => {
     }
 };
 
+// Controller function to approve a recording based on score
 exports.approveRecording = async (req, res) => {
     const { score } = req.body;
 
@@ -99,8 +103,8 @@ exports.approveRecording = async (req, res) => {
         if (score >= 70) user.level += 1;
 
         let promotionMessage = '';
-        if (user.level >= 5 && user.role !== 'Instructor') {
-            user.role = 'Instructor';
+        if (user.level >= 5 && user.role !== 'instructor') {
+            user.role = 'instructor';
             promotionMessage = 'Congratulations on your promotion to Instructor!';
         }
 
@@ -112,6 +116,7 @@ exports.approveRecording = async (req, res) => {
     }
 };
 
+// Controller function to get details of a recording
 exports.getRecordingDetails = async (req, res) => {
     const recording = await findRecordingById(req.params.id, res);
     if (!recording) return;
@@ -123,6 +128,7 @@ exports.getRecordingDetails = async (req, res) => {
     }
 };
 
+// Controller function to delete AI result of a recording
 exports.deleteAIResult = async (req, res) => {
     const recording = await findRecordingById(req.params.id, res);
     if (!recording) return;

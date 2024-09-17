@@ -1,11 +1,13 @@
 // backend/models/Recording.js
+// Importing required modules
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Defining the schema for the 'Recording' model
 const recordingSchema = new Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User', // Reference to the 'User' model
         required: true
     },
     audioUrl: {
@@ -26,12 +28,13 @@ const recordingSchema = new Schema({
     },
     date: {
         type: Date,
-        default: Date.now
+        default: Date.now // Default date is the current date
     }
 }, {
-    timestamps: true
+    timestamps: true // Automatically add 'createdAt' and 'updatedAt' fields
 });
 
+// Creating the 'Recording' model based on the schema
 const Recording = mongoose.model('Recording', recordingSchema);
 
 module.exports = Recording;

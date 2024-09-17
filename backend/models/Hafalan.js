@@ -1,7 +1,9 @@
 // backend/models/Hafalan.js
+// Importing required modules
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Defining the schema for the 'Hafalan' model
 const hafalanSchema = new Schema({
     title: {
         type: String,
@@ -20,9 +22,10 @@ const hafalanSchema = new Schema({
         required: true
     }
 }, {
-    timestamps: true
+    timestamps: true // Automatically add 'createdAt' and 'updatedAt' fields
 });
 
+// Creating the 'Hafalan' model based on the schema
 const Hafalan = mongoose.model('Hafalan', hafalanSchema);
 
 module.exports = Hafalan;
