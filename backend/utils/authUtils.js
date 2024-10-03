@@ -1,25 +1,37 @@
 // backend/utils/auth.js
-// Importing required modules and configuration keys
-const jwt = require('jsonwebtoken'); // Importing jsonwebtoken for token operations
-const bcrypt = require('bcryptjs'); // Importing bcrypt for password hashing and comparison
-const config = require('../config/keys'); // Importing configuration keys for JWT secret
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { jwtSecret } = require('../config/keys');
 
-// Function to generate JWT token based on user information
+/**
+ * Generates a JWT token based on user information.
+ * @param {Object} user - The user object containing user details.
+ * @returns {string} - The generated JWT token.
+ */
 const generateToken = (user) => {
-    return jwt.sign({ id: user._id, role: user.role }, config.jwtSecret, {
-        expiresIn: '1h' // Token expiration set to 1 hour
+    return jwt.sign({ id: user._id, role: user.role }, jwtSecret, {
+        expiresIn: '1h'
     });
 };
 
-// Function to hash a password using bcrypt
+/**
+ * Hashes a password using bcrypt.
+ * @param {string} password - The plain text password to hash.
+ * @returns {Promise<string>} - The hashed password.
+ */
 const hashPassword = async (password) => {
-    const salt = await bcrypt.genSalt(10); // Generate salt with cost factor
-    return await bcrypt.hash(password, salt); // Hash the password with the generated salt
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
 };
 
-// Function to compare an input password with a hashed password using bcrypt
-const comparePassword = async (inputPassword, hashedPassword) => {
-    return await bcrypt.compare(inputPassword, hashedPassword); // Compare input password with hashed password
+/**
+ * Compares an input password with a hashed password using bcrypt.
+ * @param {string} inputPassword - The plain text password to compare.
+ * @param {string} hashedPassword - The hashed password to compare against.
+ * @returns {Promise<boolean>} - True if passwords match, otherwise false.
+ */
+const comparePassword = (inputPassword, hashedPassword) => {
+    return bcrypt.compare(inputPassword, hashedPassword);
 };
 
 module.exports = {

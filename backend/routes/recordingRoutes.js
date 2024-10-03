@@ -1,23 +1,24 @@
 // backend/routes/recordingRoutes.js
-// Importing required modules and controllers
 const express = require('express');
 const router = express.Router();
-const { submitRecording, getRecordingDetails, reprocessRecording, deleteAIResult } = require('../controllers/recordingController');
+const {
+    submitRecording,
+    getRecordingDetails,
+    reprocessRecording,
+    deleteAIResult
+} = require('../controllers/recordingController');
 
-// POST /recordings
-// Route to submit a new recording
+// Routes for recording operations
+// POST /recordings - Submit a new recording
 router.post('/recordings', submitRecording);
 
-// GET /recordings/:id
-// Route to get recording details
+// GET /recordings/:id - Get details of a specific recording
 router.get('/recordings/:id', getRecordingDetails);
 
-// POST /:id/reprocess
-// Route to reprocess a recording
-router.post('/:id/reprocess', reprocessRecording);
+// POST /recordings/:id/reprocess - Reprocess a specific recording
+router.post('/recordings/:id/reprocess', reprocessRecording);
 
-// DELETE /:id/aiResult
-// Route to delete AI result of a recording
-router.delete('/:id/aiResult', deleteAIResult);
+// DELETE /recordings/:id/aiResult - Delete AI result of a specific recording
+router.delete('/recordings/:id/aiResult', deleteAIResult);
 
 module.exports = router;

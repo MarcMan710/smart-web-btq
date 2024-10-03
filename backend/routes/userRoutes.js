@@ -1,24 +1,21 @@
 // backend/routes/userRoutes.js
-// Importing required modules and controllers
+
 const express = require('express');
 const router = express.Router();
-const { getUserProfile, updateUserProfile, getUserProgress, logoutUser } = require('../controllers/userController');
-const { protect, logout } = require('../middleware/authMiddleware');
+const userController = require('../controllers/userController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// GET /api/users/profile
-// Get the logged-in user's profile
-router.get('/profile', protect, getUserProfile);
+// Destructure methods from userController and authMiddleware for clarity
+const { getUserProfile, updateUserProfile, getUserProgress, logoutUser } = userController;
+const { protect, logout } = authMiddleware;
 
-// PUT /api/users/profile
-// Update the logged-in user's profile
-router.put('/profile', protect, updateUserProfile);
+// Define routes with appropriate HTTP methods and middleware
+router.route('/profile')
+    .get(protect, getUserProfile) // GET /api/users/profile
+    .put(protect, updateUserProfile); // PUT /api/users/profile
 
-// GET /api/users/progress
-// Get the logged-in user's progress
-router.get('/progress', protect, getUserProgress);
+router.get('/progress', protect, getUserProgress); // GET /api/users/progress
 
-// GET /api/users/logout
-// Logout the user and redirect to login
-router.get('/logout', logout, logoutUser);
+router.get('/logout', logout, logoutUser); // GET /api/users/logout
 
 module.exports = router;
