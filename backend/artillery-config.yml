@@ -1,0 +1,83 @@
+config:
+  target: "http://localhost:5000" # Ganti dengan URL aplikasi Anda jika berbeda
+  phases:
+    - duration: 60
+      arrivalRate: 10
+  defaults:
+    headers:
+      Content-Type: "application/json"
+scenarios:
+  - name: "Submit Recording"
+    flow:
+      - post:
+          url: "/api/recordings"
+          json:
+            audioUrl: "http://example.com/audio.mp3"
+            hafalanId: "12345"
+          expect:
+            - statusCode: 201
+
+  - name: "Approve Recording"
+    flow:
+      - post:
+          url: "/api/recordings/12345/approve"
+          json:
+            score: 75
+          expect:
+            - statusCode: 200
+
+  - name: "Get Recording Details"
+    flow:
+      - get:
+          url: "/api/recordings/12345"
+          expect:
+            - statusCode: 200
+
+  - name: "Delete AI Result"
+    flow:
+      - delete:
+          url: "/api/recordings/12345/ai-result"
+          expect:
+            - statusCode: 200
+
+  - name: "Root Route"
+    flow:
+      - get:
+          url: "/"
+          expect:
+            - statusCode: 200
+
+  - name: "User Registration"
+    flow:
+      - post:
+          url: "/api/auth/register"
+          json:
+            firstName: "{{ firstName }}"
+            lastName: "{{ lastName }}"
+            username: "{{ username }}"
+            email: "{{ email }}"
+            password: "password123"
+            confirmPassword: "password123"
+          expect:
+            - statusCode: 201
+    payload:
+      path: "register_user.csv"
+      fields:
+        - "firstName"
+        - "lastName"
+        - "username"
+        - "email"
+
+  - name: "User Login"
+    flow:
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "{{ email }}"
+            password: "password123"
+          expect:
+            - statusCode: 200
+    payload:
+      path: "login_users.csv"
+      fields:
+        - "email"
