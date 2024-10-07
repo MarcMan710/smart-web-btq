@@ -21,4 +21,7 @@ router.post('/recordings/:id/reprocess', reprocessRecording);
 // DELETE /recordings/:id/aiResult - Delete AI result of a specific recording
 router.delete('/recordings/:id/aiResult', deleteAIResult);
 
+// POST /recordings/:id/feedback - Instructor memberikan feedback pada rekaman
+router.post('/recordings/:id/feedback', protect, instructor, giveFeedback);
+
 module.exports = router;

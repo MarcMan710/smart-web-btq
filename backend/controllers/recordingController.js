@@ -152,3 +152,26 @@ exports.deleteAIResult = async (req, res) => {
         handleError(res, err);
     }
 };
+
+// Fungsi untuk memberikan feedback pada rekaman
+exports.giveFeedback = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { feedback } = req.body;
+
+        // Temukan rekaman berdasarkan ID
+        const recording = await Recording.findById(id);
+
+        if (!recording) {
+            return res.status(404).json({ message: 'Recording not found' });
+        }
+
+        // Tambahkan feedback ke rekaman
+        recording.feedback = feedback;
+        await recording.save();
+
+        res.status(200).json({ message: 'Feedback diberikan', recording });
+    } catch (error) {
+        res.status(500).json({ message: 'Error memberikan feedback', error });
+    }
+};

@@ -1,4 +1,4 @@
-const { submitRecording, reprocessRecording, approveRecording, getRecordingDetails, deleteAIResult } = require('../../controllers/recordingController');
+const { submitRecording, reprocessRecording, approveRecording, getRecordingDetails, deleteAIResult, giveFeedback } = require('../../controllers/recordingController');
 const Hafalan = require('../../models/Hafalan');
 const Recording = require('../../models/Recording');
 const User = require('../../models/User');
@@ -171,5 +171,30 @@ describe('Recording Controller', () => {
             message: 'AI result deleted',
             recording
         });
+    });
+
+        // Successfully adds feedback to an existing recording
+    it('should add feedback to an existing recording when valid ID is provided', async () => {
+      const req = {
+        params: { id: 'validRecordingId' },
+        body: { feedback: 'Great recording!' }
+      };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
+      const recording = {
+        feedback: '',
+        save: jest.fn().mockResolvedValue(true)
+      };
+      jest.spyOn(Recording, 'findById').mockResolvedValue(recording);
+
+      await giveFeedback(req, res);
+
+      expect(Recording.findById).toHaveBeenCalledWith('validRecordingId');
+      expect(recording.feedback).toBe('Great recording!');
+      expect(recording.save).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Feedback diberikan', recording });
     });
 });
