@@ -1,20 +1,12 @@
 // frontend/src/pages/HafalanPage.js
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useState } from 'react';
 import HafalanCard from '../components/HafalanCard';
 import HafalanModal from '../components/HafalanModal';
+import HafalanContext from '../context/HafalanContext';
 
 const HafalanPage = () => {
-    const [hafalanList, setHafalanList] = useState([]);
+    const { hafalanList, loading, error } = useContext(HafalanContext);
     const [selectedHafalan, setSelectedHafalan] = useState(null);
-
-    useEffect(() => {
-        const fetchHafalan = async () => {
-            const { data } = await axios.get('/api/hafalan');
-            setHafalanList(data);
-        };
-        fetchHafalan();
-    }, []);
 
     const handleCardClick = (hafalan) => {
         setSelectedHafalan(hafalan);
@@ -23,6 +15,14 @@ const HafalanPage = () => {
     const handleCloseModal = () => {
         setSelectedHafalan(null);
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className='flex flex-col items-center px-6 py-32 text-nblack4'>

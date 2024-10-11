@@ -5,8 +5,10 @@ const {
     submitRecording,
     getRecordingDetails,
     reprocessRecording,
-    deleteAIResult
+    deleteAIResult,
+    giveFeedback
 } = require('../controllers/recordingController');
+const { protect, instructor } = require('../middleware/authMiddleware');
 
 // Routes for recording operations
 // POST /recordings - Submit a new recording

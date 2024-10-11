@@ -10,7 +10,6 @@ const userSchema = new Schema({
     lastName: { type: String, required: true }, // Last name of the user
 
     // Authentication Information
-    username: { type: String, required: true, unique: true }, // Unique username for the user
     email: { 
         type: String, 
         required: true, 

@@ -8,7 +8,6 @@ const Profile = () => {
         lastName: '',
         level: '',
         role: '',
-        username: '',
         email: '',
         password: ''
     });
@@ -67,10 +66,6 @@ const Profile = () => {
                         <input type="text" name="role" value={userData.role} readOnly />
                     </label>
                     <label>
-                        Username:
-                        <input type="text" name="username" value={userData.username} readOnly />
-                    </label>
-                    <label>
                         Email:
                         <input type="email" name="email" value={userData.email} readOnly />
                     </label>
@@ -94,10 +89,7 @@ const Profile = () => {
                         <label htmlFor='role'>Role:</label>
                         <input className='px-2 py-1 rounded-md' type="text" name="role" id='role' value={userData.role} readOnly />
                     </div>
-                    <div className='flex justify-between space-x-1'>
-                        <label htmlFor='username'>Username:</label>
-                        <input className='px-2 py-1 rounded-md' type="text" name="username" id='username' value={userData.username} readOnly />
-                    </div>
+        
                     <div className='flex justify-between space-x-1'>
                         <label htmlFor='email'>Email:</label>
                         <input className='px-2 py-1 rounded-md' type="email" name="email" id='email' value={userData.email} readOnly />

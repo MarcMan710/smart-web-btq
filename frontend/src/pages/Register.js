@@ -6,7 +6,6 @@ const Register = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
-        username: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -70,7 +69,6 @@ const Register = () => {
                 <div className='flex flex-col items-center space-y-6 w-[340px]'>
                     <input className='w-full px-2 py-1 rounded-md text-nblack4' type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="First Name" required />
                     <input className='w-full px-2 py-1 rounded-md text-nblack4' type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Last Name" required />
-                    <input className='w-full px-2 py-1 rounded-md text-nblack4' type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" required />
                     <input className='w-full px-2 py-1 rounded-md text-nblack4' type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
                     {errors.email && <span className='text-sm text-nred'>{errors.email}</span>}
                     <input className='w-full px-2 py-1 rounded-md text-nblack4' type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required />

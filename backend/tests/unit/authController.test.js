@@ -30,7 +30,6 @@ describe('Auth Controller', () => {
         req.body = {
             firstName: 'John',
             lastName: 'Doe',
-            username: 'johndoe',
             email: 'john.doe@example.com',
             password: 'password123',
             confirmPassword: 'password123'
@@ -40,7 +39,6 @@ describe('Auth Controller', () => {
             _id: 'userId123',
             firstName: 'John',
             lastName: 'Doe',
-            username: 'johndoe',
             email: 'john.doe@example.com',
             role: 'student',
             level: 1
@@ -58,7 +56,6 @@ describe('Auth Controller', () => {
             _id: 'userId123',
             firstName: 'John',
             lastName: 'Doe',
-            username: 'johndoe',
             email: 'john.doe@example.com',
             role: 'student',
             level: 1,
@@ -67,22 +64,9 @@ describe('Auth Controller', () => {
     });
 
     it('should login with valid email and password', async () => {
-        req.body = { emailOrUsername: 'test@example.com', password: 'password123' };
+        req.body = { email: 'test@example.com', password: 'password123' };
 
         User.findOne.mockResolvedValue({ email: 'test@example.com', password: 'hashedPassword' });
-        bcrypt.compare.mockResolvedValue(true);
-        jwt.sign.mockReturnValue('generatedToken');
-
-        await loginUser(req, res);
-
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({ token: 'generatedToken' });
-    });
-
-    it('should login with valid username and password', async () => {
-        req.body = { emailOrUsername: 'testuser', password: 'password123' };
-
-        User.findOne.mockResolvedValue({ username: 'testuser', password: 'hashedPassword' });
         bcrypt.compare.mockResolvedValue(true);
         jwt.sign.mockReturnValue('generatedToken');
 

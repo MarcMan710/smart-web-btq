@@ -7,32 +7,27 @@ const config = require('../config/keys');
 
 // Function to register a new user
 const registerUser = async (req, res) => {
-    const { firstName, lastName, username, email, password, confirmPassword } = req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Passwords do not match' });
     }
 
     try {
-        const [existingUser, existingUsername] = await Promise.all([
-            User.findOne({ email }),
-            User.findOne({ username })
+        const [existingUser] = await Promise.all([
+            User.findOne({ email })
         ]);
 
         if (existingUser) {
             return res.status(400).json({ message: 'Email already registered' });
         }
 
-        if (existingUsername) {
-            return res.status(400).json({ message: 'Username already taken' });
-        }
 
         const hashedPassword = await hashPassword(password);
 
         const user = new User({
             firstName,
             lastName,
-            username,
             email,
             password: hashedPassword,
             role: 'student',
@@ -47,7 +42,6 @@ const registerUser = async (req, res) => {
             _id: savedUser._id,
             firstName: savedUser.firstName,
             lastName: savedUser.lastName,
-            username: savedUser.username,
             email: savedUser.email,
             role: savedUser.role,
             level: savedUser.level,
@@ -61,15 +55,10 @@ const registerUser = async (req, res) => {
 
 // Function to authenticate user login
 const loginUser = async (req, res) => {
-    const { emailOrUsername, password, rememberMe } = req.body;
+    const { email, password, rememberMe } = req.body;
 
     try {
-        const user = await User.findOne({
-            $or: [
-                { email: emailOrUsername },
-                { username: emailOrUsername }
-            ]
-        });
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });

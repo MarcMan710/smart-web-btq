@@ -29,7 +29,7 @@ const RecordingDetailModal = ({ recording, onClose, onReprocess, onApprove }) =>
             <div className="relative w-[75ch] p-6 bg-nwhite1 rounded-md text-nblack4">
                 <span className="absolute font-bold text-lg top-2 right-3 cursor-pointer bg-nwhite2 px-2 rounded-full hover:bg-nwhite3" onClick={onClose}>&times;</span>
                 <h2 className='font-semibold'>Detail Rekaman Hafalan</h2>
-                <p>Nama: {recording.userName}</p>
+                <p>Nama: {recording.firstName}</p>
                 <p>AI Result: {recording.aiResult?.score || recording.aiResult?.error}</p>
                 <p>Status: {recording.status}</p>
                 <p className='mb-6'>Date: {new Date(recording.date).toLocaleString()}</p>
