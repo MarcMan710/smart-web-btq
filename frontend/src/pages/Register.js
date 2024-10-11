@@ -53,7 +53,7 @@ const Register = () => {
             const response = await axios.post('/api/auth/register', formData);
             if (response.status === 201) {
                 // Redirect to Dashboard
-                navigate.push('/dashboard');
+                navigate('/dashboard');
             }
         } catch (error) {
             console.error('Registration failed:', error.response.data.message);
