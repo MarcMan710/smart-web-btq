@@ -1,6 +1,5 @@
-// frontend/src/pages/Profile.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../axiosConfig'; // Import the configured Axios instance
 
 const Profile = () => {
     const [userData, setUserData] = useState({
@@ -15,7 +14,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const res = await axios.get('/api/users/me');
+                const res = await api.get('/api/users/me'); // Use the configured Axios instance
                 setUserData(res.data);
             } catch (err) {
                 console.error(err.message);
@@ -36,7 +35,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put('/api/users/me', userData);
+            await api.put('/api/users/me', userData); // Use the configured Axios instance
             alert('Profile updated successfully');
         } catch (err) {
             console.error(err.message);
@@ -48,31 +47,6 @@ const Profile = () => {
             <h1 className='font-bold text-4xl'>Profile Page</h1>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col space-y-4 w-[340px]'>
-                    {/* Reformatted for easier styling */}
-                    {/* <label>
-                        First Name:
-                        <input type="text" name="firstName" value={userData.firstName} onChange={handleChange} />
-                    </label>
-                    <label>
-                        Last Name:
-                        <input type="text" name="lastName" value={userData.lastName} onChange={handleChange} />
-                    </label>
-                    <label>
-                        Level:
-                        <input type="text" name="level" value={userData.level} readOnly />
-                    </label>
-                    <label>
-                        Role:
-                        <input type="text" name="role" value={userData.role} readOnly />
-                    </label>
-                    <label>
-                        Email:
-                        <input type="email" name="email" value={userData.email} readOnly />
-                    </label>
-                    <label>
-                        Password:
-                        <input type="password" name="password" value={userData.password} readOnly />
-                    </label> */}
                     <div className='flex justify-between space-x-1'>
                         <label htmlFor='firstName'>First Name:</label>
                         <input className='px-2 py-1 rounded-md' type="text" name="firstName" id='firstName' value={userData.firstName} onChange={handleChange} />

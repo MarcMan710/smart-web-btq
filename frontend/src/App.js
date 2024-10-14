@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Updated import
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
@@ -17,33 +17,31 @@ import SubmitRecording from './pages/SubmitRecording';
 import PrivateRoute from './components/PrivateRoute';
 import MonitorPage from './pages/MonitorPage';
 import About from './pages/About';
+import AddHafalanPage from './pages/AddHafalanPage';
 
-const App = () => {
+function App() {
     return (
         <Router>
-            <div>
-                <Navbar />
-                <main>
-                    <Routes> {/* Updated from Switch to Routes */}
-                        <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/profile" element={<PrivateRoute component={Profile} />} />
-                        <Route path="/hafalan" element={<HafalanPage />} />
-                        <Route path="/recording/:id" element={<RecordingPage />} />
-                        <Route path="/instructions" element={<InstructionPage />} />
-                        <Route path="/submit-recording" element={<SubmitRecording />} />
-                        <Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />
-                        <Route path="/monitor" element={<PrivateRoute component={MonitorPage} />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </main>
-                <Footer />
-                <ToastContainer />
-            </div>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                <Route path="/hafalan" element={<HafalanPage />} />
+                <Route path="/recording" element={<RecordingPage />} />
+                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/instructions" element={<InstructionPage />} />
+                <Route path="/submit-recording" element={<SubmitRecording />} />
+                <Route path="/monitor" element={<MonitorPage />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/add-hafalan" element={<AddHafalanPage />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Footer />
+            <ToastContainer />
         </Router>
     );
-};
+}
 
 export default App;

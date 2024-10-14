@@ -83,3 +83,22 @@ exports.deleteHafalan = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+// Controller function to add a new Hafalan
+exports.addHafalan = async (req, res) => {
+    const { title, content, levelRequired, description } = req.body;
+
+    try {
+        const newHafalan = new Hafalan({
+            title,
+            content,
+            levelRequired,
+            description
+        });
+
+        const savedHafalan = await newHafalan.save();
+        res.status(201).json(savedHafalan);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../axiosConfig'; // Adjust the path as necessary
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post('/api/auth/register', formData);
+            const response = await api.post('/api/auth/register', formData);
             if (response.status === 201) {
                 // Redirect to Dashboard
                 navigate('/dashboard');

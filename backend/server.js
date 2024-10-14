@@ -5,6 +5,7 @@ const winston = require('winston');
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const hafalanRoutes = require('./routes/hafalanRoutes');
+const cors = require('cors');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -21,6 +22,11 @@ dotenv.config();
 
 // Initialize Express application
 const app = express();
+
+// Allow requests from frontend running on port 3000
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 // Middleware setup
 app.use(express.json()); // Parse JSON request bodies

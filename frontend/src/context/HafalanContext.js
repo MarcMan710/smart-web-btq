@@ -9,7 +9,8 @@ export const HafalanProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const { fetchHafalan } = hafalanService();
+    // Ensure hafalanService is correctly imported and used
+    const fetchHafalan = hafalanService.fetchHafalan;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,10 +25,10 @@ export const HafalanProvider = ({ children }) => {
             }
         };
         fetchData();
-    }, [fetchHafalan]);
+    }, []);
 
     return (
-        <HafalanContext.Provider value={{ hafalanList, setHafalanList, loading, error }}>
+        <HafalanContext.Provider value={{ hafalanList, loading, error }}>
             {children}
         </HafalanContext.Provider>
     );

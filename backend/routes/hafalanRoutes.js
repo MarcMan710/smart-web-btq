@@ -8,7 +8,8 @@ const {
     getAllHafalan,
     getHafalanDetails,
     createOrUpdateHafalan,
-    deleteHafalan
+    deleteHafalan,
+    addHafalan
 } = require('../controllers/hafalanController');
 
 // Importing middleware
@@ -29,5 +30,9 @@ router.post('/', protect, instructor, createOrUpdateHafalan);
 // Route to delete a specific hafalan (instructor only)
 // DELETE /api/hafalan/:id
 router.delete('/:id', protect, instructor, deleteHafalan);
+
+// POST request to add a new Hafalan
+// POST /api/hafalan
+router.post('/', addHafalan);
 
 module.exports = router;

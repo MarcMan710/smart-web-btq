@@ -1,7 +1,6 @@
-// frontend/src/components/Navbar.js
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../axiosConfig'; // Import the configured Axios instance
 
 const Navbar = () => {
     const [role, setRole] = useState(null);
@@ -10,7 +9,7 @@ const Navbar = () => {
     useEffect(() => {
         const fetchUserRole = async () => {
             try {
-                const res = await axios.get('/api/users/me'); // Assuming this endpoint returns the current user data
+                const res = await api.get('/api/users'); // Use the configured Axios instance
                 setRole(res.data.role);
             } catch (err) {
                 console.error(err.message);
@@ -21,10 +20,8 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
-        // Hapus token autentikasi dari local storage
         localStorage.removeItem('authToken');
-        // Arahkan pengguna ke halaman login
-        navigate.push('/login');
+        navigate('/login'); // Corrected from navigate.push to navigate
     };
 
     return (
