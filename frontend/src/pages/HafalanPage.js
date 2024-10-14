@@ -1,12 +1,16 @@
-// frontend/src/pages/HafalanPage.js
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import HafalanCard from '../components/HafalanCard';
 import HafalanModal from '../components/HafalanModal';
-import HafalanContext from '../context/HafalanContext';
 
 const HafalanPage = () => {
-    const { hafalanList, loading, error } = useContext(HafalanContext);
     const [selectedHafalan, setSelectedHafalan] = useState(null);
+
+    // Hardcoded list of hafalan
+    const hafalanList = [
+        { _id: '1', title: 'Hafalan 1', levelRequired: 'Beginner' },
+        { _id: '2', title: 'Hafalan 2', levelRequired: 'Intermediate' },
+        { _id: '3', title: 'Hafalan 3', levelRequired: 'Advanced' },
+    ];
 
     const handleCardClick = (hafalan) => {
         setSelectedHafalan(hafalan);
@@ -16,25 +20,32 @@ const HafalanPage = () => {
         setSelectedHafalan(null);
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const renderHafalanCards = () => (
+        <div className="flex flex-col space-y-6">
+            {hafalanList.map(hafalan => (
+                <HafalanCard 
+                    key={hafalan._id} 
+                    hafalan={hafalan} 
+                    onClick={() => handleCardClick(hafalan)} 
+                />
+            ))}
+        </div>
+    );
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    const renderModal = () => (
+        selectedHafalan && (
+            <HafalanModal 
+                hafalan={selectedHafalan} 
+                onClose={handleCloseModal} 
+            />
+        )
+    );
 
     return (
         <div className='flex flex-col items-center px-6 py-32 text-nblack4'>
             <h1 className='font-bold text-4xl mb-4'>Halaman Hafalan</h1>
-            <div className="flex flex-col space-y-6">
-                {hafalanList.map(hafalan => (
-                    <HafalanCard key={hafalan._id} hafalan={hafalan} onClick={() => handleCardClick(hafalan)} />
-                ))}
-            </div>
-            {selectedHafalan && (
-                <HafalanModal hafalan={selectedHafalan} onClose={handleCloseModal} />
-            )}
+            {renderHafalanCards()}
+            {renderModal()}
         </div>
     );
 };
