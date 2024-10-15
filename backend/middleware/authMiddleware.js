@@ -29,14 +29,6 @@ const protect = async (req, res, next) => {
     }
 };
 
-// Middleware function to check if user is an Instructor
-const instructor = (req, res, next) => {
-    if (req.user?.role === 'instructor') {
-        return next();
-    }
-    res.status(403).json({ message: 'Not authorized as an Instructor' });
-};
-
 // Middleware function to logout user
 const logout = (req, res, next) => {
     req.user = null;
@@ -45,6 +37,5 @@ const logout = (req, res, next) => {
 
 module.exports = {
     protect,
-    instructor,
     logout
 };

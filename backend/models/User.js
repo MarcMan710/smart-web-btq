@@ -19,7 +19,6 @@ const userSchema = new Schema({
     password: { type: String, required: true }, // Password of the user
 
     // User Role and Progress
-    role: { type: String, default: 'student' }, // Role of the user with default as 'student'
     level: { type: Number, default: 1 }, // Level of the user with default as 1
     completedModules: { type: Number, default: 0 }, // Number of completed modules
 

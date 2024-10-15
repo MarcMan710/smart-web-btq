@@ -26,14 +26,13 @@ exports.getUserProfile = async (req, res) => {
 // Function to get user progress
 exports.getUserProgress = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id, 'role level completedModules');
+        const user = await User.findById(req.user.id, 'level completedModules');
         
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         res.json({
-            role: user.role,
             level: user.level,
             completedModules: user.completedModules
         });

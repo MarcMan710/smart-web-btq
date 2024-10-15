@@ -13,7 +13,7 @@ const {
 } = require('../controllers/hafalanController');
 
 // Importing middleware
-const { protect, instructor } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authMiddleware');
 
 // Route to get all hafalan
 // GET /api/hafalan
@@ -23,13 +23,13 @@ router.get('/', protect, getAllHafalan);
 // GET /api/hafalan/:id
 router.get('/:id', protect, getHafalanDetails);
 
-// Route to create or update a hafalan (instructor only)
+// Route to create or update a hafalan 
 // POST /api/hafalan
-router.post('/', protect, instructor, createOrUpdateHafalan);
+router.post('/', protect, createOrUpdateHafalan);
 
-// Route to delete a specific hafalan (instructor only)
+// Route to delete a specific hafalan
 // DELETE /api/hafalan/:id
-router.delete('/:id', protect, instructor, deleteHafalan);
+router.delete('/:id', protect, deleteHafalan);
 
 // POST request to add a new Hafalan
 // POST /api/hafalan

@@ -25,10 +25,6 @@ const recordingSchema = new mongoose.Schema({
             correctedText: String
         }]
     },
-    feedback: {
-        type: String,
-        default: ''
-    },
     passed: {
         type: Boolean,
         default: false

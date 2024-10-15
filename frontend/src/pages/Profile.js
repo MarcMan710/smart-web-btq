@@ -6,7 +6,6 @@ const Profile = () => {
         firstName: '',
         lastName: '',
         level: '',
-        role: '',
         email: '',
         password: ''
     });
@@ -59,11 +58,6 @@ const Profile = () => {
                         <label htmlFor='level'>Level:</label>
                         <input className='px-2 py-1 rounded-md' type="text" name="level" id='level' value={userData.level} readOnly />
                     </div>
-                    <div className='flex justify-between space-x-1'>
-                        <label htmlFor='role'>Role:</label>
-                        <input className='px-2 py-1 rounded-md' type="text" name="role" id='role' value={userData.role} readOnly />
-                    </div>
-        
                     <div className='flex justify-between space-x-1'>
                         <label htmlFor='email'>Email:</label>
                         <input className='px-2 py-1 rounded-md' type="email" name="email" id='email' value={userData.email} readOnly />

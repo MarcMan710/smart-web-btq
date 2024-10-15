@@ -33,7 +33,6 @@ function App() {
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                 <Route path="/instructions" element={<InstructionPage />} />
                 <Route path="/submit-recording" element={<SubmitRecording />} />
-                <Route path="/monitor" element={<MonitorPage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/add-hafalan" element={<AddHafalanPage />} />
                 <Route path="*" element={<NotFound />} />

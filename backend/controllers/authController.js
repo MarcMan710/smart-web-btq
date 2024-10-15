@@ -22,7 +22,6 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'Email already registered' });
         }
 
-
         const hashedPassword = await hashPassword(password);
 
         const user = new User({
@@ -30,8 +29,7 @@ const registerUser = async (req, res) => {
             lastName,
             email,
             password: hashedPassword,
-            role: 'student',
-            level: 1
+            level: 1 // Removed role assignment
         });
 
         const savedUser = await user.save();
@@ -43,8 +41,7 @@ const registerUser = async (req, res) => {
             firstName: savedUser.firstName,
             lastName: savedUser.lastName,
             email: savedUser.email,
-            role: savedUser.role,
-            level: savedUser.level,
+            level: savedUser.level, 
             token
         });
     } catch (error) {
@@ -73,7 +70,6 @@ const loginUser = async (req, res) => {
         const payload = {
             id: user.id,
             email: user.email,
-            role: user.role
         };
 
         const token = jwt.sign(payload, config.jwtSecret, {

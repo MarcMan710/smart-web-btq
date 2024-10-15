@@ -1,20 +1,21 @@
-// frontend/pages/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const res = await axios.post('/api/auth/login', { email, password, rememberMe });
-            localStorage.setItem('token', res.data.token);
+            const res = await axios.post('/api/auth/login', { email, password });
+            login(res.data.token, rememberMe);
             navigate('/dashboard');
         } catch (err) {
             console.error(err.response.data.message);
@@ -27,7 +28,6 @@ const Login = () => {
                 Login
             </h1>
             <form onSubmit={handleSubmit}>
-                {/* Flex container */}
                 <div className='flex flex-col space-y-4 w-[340px]'>
                     <div className='flex items-center justify-between space-x-2'>
                         <label>Email:</label>
@@ -49,17 +49,6 @@ const Login = () => {
                             className='px-2 py-1 rounded-md'
                         />
                     </div>
-                    {/* Reformatted for easier styling */}
-                    {/* <div>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                            />
-                            Remember Me
-                        </label>
-                    </div> */}
                     <div className='flex items-center justify-center space-x-2'>
                         <input
                             type="checkbox"

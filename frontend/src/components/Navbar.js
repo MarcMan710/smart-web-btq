@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../axiosConfig'; // Import the configured Axios instance
 
 const Navbar = () => {
-    const [role, setRole] = useState(null);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchUserRole = async () => {
-            try {
-                const res = await api.get('/api/users'); // Use the configured Axios instance
-                setRole(res.data.role);
-            } catch (err) {
-                console.error(err.message);
-            }
-        };
-
-        fetchUserRole();
-    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
-        navigate('/login'); // Corrected from navigate.push to navigate
+        navigate('/login');
     };
 
     return (
@@ -41,7 +26,6 @@ const Navbar = () => {
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/hafalan">Hafalan</Link></li>
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/profile">Profil</Link></li>
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/about">Tentang</Link></li>
-                {role === 'Instructor' && <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/monitor">Monitor Pengguna</Link></li>}
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nred/20'><button onClick={handleLogout}>Logout</button></li>
             </ul>
         </nav>

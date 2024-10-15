@@ -1,4 +1,3 @@
-// frontend/src/context/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -7,7 +6,6 @@ export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState({
         token: localStorage.getItem('token') || sessionStorage.getItem('token') || null,
         isAuthenticated: false,
-        role: localStorage.getItem('role') || sessionStorage.getItem('role') || null,
     });
 
     useEffect(() => {
@@ -16,23 +14,19 @@ export const AuthProvider = ({ children }) => {
         }
     }, [authState.token]);
 
-    const login = (token, rememberMe, role) => {
+    const login = (token, rememberMe) => {
         if (rememberMe) {
             localStorage.setItem('token', token);
-            localStorage.setItem('role', role);
         } else {
             sessionStorage.setItem('token', token);
-            sessionStorage.setItem('role', role);
         }
-        setAuthState({ token, isAuthenticated: true, role });
+        setAuthState({ token, isAuthenticated: true });
     };
 
     const logout = () => {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
-        localStorage.removeItem('role');
-        sessionStorage.removeItem('role');
-        setAuthState({ token: null, isAuthenticated: false, role: null });
+        setAuthState({ token: null, isAuthenticated: false });
     };
 
     return (
