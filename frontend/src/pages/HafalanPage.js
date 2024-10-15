@@ -7,9 +7,9 @@ const HafalanPage = () => {
 
     // Hardcoded list of hafalan
     const hafalanList = [
-        { _id: '1', title: 'Hafalan 1', levelRequired: 'Beginner' },
-        { _id: '2', title: 'Hafalan 2', levelRequired: 'Intermediate' },
-        { _id: '3', title: 'Hafalan 3', levelRequired: 'Advanced' },
+        { _id: '1', title: 'Hafalan 1', levelRequired: '1', description: 'Description for Hafalan 1' },
+        { _id: '2', title: 'Hafalan 2', levelRequired: '2', description: 'Description for Hafalan 2' },
+        { _id: '3', title: 'Hafalan 3', levelRequired: '3', description: 'Description for Hafalan 3' },
     ];
 
     const handleCardClick = (hafalan) => {
