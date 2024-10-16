@@ -1,12 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Updated import
-
+import { useNavigate } from 'react-router-dom';
 
 const HafalanModal = ({ hafalan, onClose }) => {
     const navigate = useNavigate();
 
     const handleStartHafalan = () => {
-        navigate(`/recording/${hafalan._id}`);
+        navigate('/instruction'); // Navigate to the InstructionPage
     };
 
     return (

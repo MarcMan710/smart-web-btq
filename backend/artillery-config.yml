@@ -17,26 +17,10 @@ scenarios:
           expect:
             - statusCode: 201
 
-  - name: "Approve Recording"
-    flow:
-      - post:
-          url: "/api/recordings/12345/approve"
-          json:
-            score: 75
-          expect:
-            - statusCode: 200
-
   - name: "Get Recording Details"
     flow:
       - get:
           url: "/api/recordings/12345"
-          expect:
-            - statusCode: 200
-
-  - name: "Delete AI Result"
-    flow:
-      - delete:
-          url: "/api/recordings/12345/ai-result"
           expect:
             - statusCode: 200
 

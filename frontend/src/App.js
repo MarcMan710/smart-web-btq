@@ -15,7 +15,6 @@ import NotFound from './pages/NotFound';
 import InstructionPage from './pages/InstructionPage';
 import SubmitRecording from './pages/SubmitRecording';
 import PrivateRoute from './components/PrivateRoute';
-import MonitorPage from './pages/MonitorPage';
 import About from './pages/About';
 import AddHafalanPage from './pages/AddHafalanPage';
 
@@ -31,7 +30,7 @@ function App() {
                 <Route path="/hafalan" element={<HafalanPage />} />
                 <Route path="/recording" element={<RecordingPage />} />
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path="/instructions" element={<InstructionPage />} />
+                <Route path="/instruction" element={<InstructionPage />} />
                 <Route path="/submit-recording" element={<SubmitRecording />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/add-hafalan" element={<AddHafalanPage />} />
