@@ -13,7 +13,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const res = await api.get('/api/users/me'); // Use the configured Axios instance
+                const res = await api.get('/api/users'); // Use the configured Axios instance
                 setUserData(res.data);
             } catch (err) {
                 console.error(err.message);
@@ -34,7 +34,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.put('/api/users/me', userData); // Use the configured Axios instance
+            await api.put('/api/users', userData); // Use the configured Axios instance
             alert('Profile updated successfully');
         } catch (err) {
             console.error(err.message);

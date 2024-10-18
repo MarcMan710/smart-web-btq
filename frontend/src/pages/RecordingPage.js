@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const RecordingPage = () => {
+const RecordingPage = ({ selectedHafalan }) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [audioUrl, setAudioUrl] = useState(null);
@@ -44,6 +44,7 @@ const RecordingPage = () => {
             {!isRecording && !audioUrl && (
                 <div className='flex flex-col items-center space-y-4'>
                     <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
+                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
                     {/* Logo */}
                     <div className='p-6 bg-nwhite2 shadow-sm'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
@@ -57,6 +58,7 @@ const RecordingPage = () => {
             {isRecording && !isPaused && (
                 <div className='flex flex-col items-center space-y-4'>
                     <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
+                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
                     {/* Logo */}
                     <div className='p-6 bg-nwhite2 shadow-sm text-ngreen'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
@@ -72,6 +74,7 @@ const RecordingPage = () => {
             {isRecording && isPaused && (
                 <div className='flex flex-col items-center space-y-4'>
                     <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
+                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
                     {/* Logo */}
                     <div className='p-6 bg-nwhite2 shadow-sm text-ngreen'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
@@ -87,6 +90,7 @@ const RecordingPage = () => {
             {audioUrl && (
                 <div className='flex flex-col items-center space-y-4'>
                     <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
+                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
                     {/* Logo */}
                     <div className='p-6 bg-nwhite2 shadow-sm text-ngreen'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
