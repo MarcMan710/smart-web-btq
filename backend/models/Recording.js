@@ -1,12 +1,10 @@
 // backend/models/Recording.js
-// Importing required modules
 const mongoose = require('mongoose');
 
-// Defining the schema for the 'Recording' model
 const recordingSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Reference to the 'User' model
+        ref: 'User',
         required: true
     },
     hafalanId: {
@@ -18,12 +16,17 @@ const recordingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    aiResult: {
-        score: Number,
-        corrections: [{
-            originalText: String,
-            correctedText: String
-        }]
+    initialScore: {
+        type: Number,
+        default: null
+    },
+    wer: {
+        type: Number,
+        default: null
+    },
+    finalScore: {
+        type: Number,
+        default: null
     },
     passed: {
         type: Boolean,
@@ -31,13 +34,12 @@ const recordingSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now // Default date is the current date
+        default: Date.now
     }
 }, {
-    timestamps: true // Automatically add 'createdAt' and 'updatedAt' fields
+    timestamps: true
 });
 
-// Creating the 'Recording' model based on the schema
 const Recording = mongoose.model('Recording', recordingSchema);
 
 module.exports = Recording;

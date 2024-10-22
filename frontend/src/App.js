@@ -8,15 +8,13 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import HafalanPage from './pages/HafalanPage';
+import HistoryPage from './pages/HistoryPage';
 import RecordingPage from './pages/RecordingPage';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import InstructionPage from './pages/InstructionPage';
-import SubmitRecording from './pages/SubmitRecording';
 import PrivateRoute from './components/PrivateRoute';
 import About from './pages/About';
-import AddHafalanPage from './pages/AddHafalanPage';
 
 function App() {
     return (
@@ -27,13 +25,11 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                <Route path="/hafalan" element={<HafalanPage />} />
+                <Route path="/history" element={<HistoryPage />} />
                 <Route path="/recording" element={<RecordingPage />} />
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                 <Route path="/instruction" element={<InstructionPage />} />
-                <Route path="/submit-recording" element={<SubmitRecording />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/add-hafalan" element={<AddHafalanPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />

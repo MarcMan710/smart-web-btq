@@ -13,7 +13,8 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const res = await api.get('/api/users'); // Use the configured Axios instance
+                const res = await api.get('/api/users');
+                console.log(res.data); // Tambahkan log ini
                 setUserData(res.data);
             } catch (err) {
                 console.error(err.message);

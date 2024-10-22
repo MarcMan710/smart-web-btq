@@ -16,7 +16,6 @@ async function findUserByEmail(email) {
 // Defining the schema for the 'Hafalan' model
 const hafalanSchema = new mongoose.Schema({
     title: { type: String, required: true }, // Title of the hafalan
-    content: { type: String, required: true }, // Content of the hafalan
     levelRequired: { type: Number, required: true }, // Level required to access the hafalan
     description: { type: String, required: true } // Description of the hafalan
 }, {

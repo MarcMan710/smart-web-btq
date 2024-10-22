@@ -1,80 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import HafalanCard from '../components/HafalanCard';
+import HafalanModal from '../components/HafalanModal';
 
 const Dashboard = () => {
-    const [progress, setProgress] = useState(null);
-    const [filter, setFilter] = useState('');
-    const [sort, setSort] = useState('date');
+    const [selectedHafalan, setSelectedHafalan] = useState(null);
 
-    useEffect(() => {
-        const fetchProgress = async () => {
-            try {
-                const res = await axios.get('/api/users/progress');
-                setProgress(res.data);
-            } catch (err) {
-                console.error(err.message);
-            }
-        };
+    // Hardcoded list of hafalan
+    const hafalanList = [
+        { _id: '1', title: 'Surah Al-Fatihah', levelRequired: '1', description: 'Surah Al-Fatihah adalah Surah pertama dalam Kitab Al-Quran' }
+    ];
 
-        fetchProgress();
-    }, []);
-
-    const handleFilterChange = (e) => {
-        setFilter(e.target.value);
+    const handleCardClick = (hafalan) => {
+        setSelectedHafalan(hafalan);
     };
 
-    const handleSortChange = (e) => {
-        setSort(e.target.value);
+    const handleCloseModal = () => {
+        setSelectedHafalan(null);
     };
 
-    const filteredRecordings = progress?.recordings
-        .filter(record => record.status.includes(filter))
-        .sort((a, b) => {
-            if (sort === 'date') {
-                return new Date(b.date) - new Date(a.date);
-            } else if (sort === 'score') {
-                return b.aiResult.score - a.aiResult.score;
-            }
-            return 0;
-        });
+    const renderHafalanCards = () => (
+        <div className="flex flex-col space-y-6">
+            {hafalanList.map(hafalan => (
+                <HafalanCard 
+                    key={hafalan._id} 
+                    hafalan={hafalan} 
+                    onClick={() => handleCardClick(hafalan)} 
+                />
+            ))}
+        </div>
+    );
 
-    if (!progress) {
-        return <div>Loading...</div>;
-    }
+    const renderModal = () => (
+        selectedHafalan && (
+            <HafalanModal 
+                hafalan={selectedHafalan} 
+                onClose={handleCloseModal} 
+            />
+        )
+    );
 
     return (
         <div className='flex flex-col items-center px-6 py-10 text-nblack4'>
-            <h1 className='font-bold text-4xl mb-2'>Dashboard</h1>
-            <div className='flex flex-col mb-4'>
-                <p>Level: {progress.level}</p>
-            </div>
-
-            <h2 className='font-semibold text-xl mb-2'>Recording History</h2>
-            <div className='flex flex-col mb-4'>
-                <div className='flex items-center space-x-3 mb-1'>
-                    <label htmlFor='filter'>Filter by status:</label>
-                    <input className='px-2 py-1 rounded-md' type="text" id='filter' value={filter} onChange={handleFilterChange} />
-                </div>
-                <div className='flex items-center space-x-4'>
-                    <label htmlFor='sort'>Sort by status:</label>
-                    <select id='sort' value={sort} onChange={handleSortChange}>
-                        <option value="date">Date</option>
-                        <option value="score">Score</option>
-                    </select>
-                </div>
-            </div>
-            <ul className='flex flex-col items-center space-y-6'>
-                {filteredRecordings.map(record => (
-                    <li className='p-6 bg-nwhite2 shadow-md w-[45ch]' key={record.id}>
-                        <p>Audio URL: {record.audioUrl}</p>
-                        <p>AI Result: {record.aiResult.score || record.aiResult.error}</p>
-                        <p>Passed: {record.passed ? 'Yes' : 'No'}</p>
-                        <p>Status: {record.status}</p>
-                        <p>Instructor Review: {record.instructorReview}</p>
-                        <p>Date: {new Date(record.date).toLocaleString()}</p>
-                    </li>
-                ))}
-            </ul>
+            <h1 className='font-bold text-4xl mb-2'>Assalamualaikum!</h1>
+            {renderHafalanCards()}
+            {renderModal()}
         </div>
     );
 };

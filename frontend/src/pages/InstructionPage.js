@@ -16,15 +16,15 @@ const InstructionPage = () => {
             <div className='flex flex-col w-[45ch] space-y-2 mb-4'>
                 <div className='flex space-x-2 items-center'>
                     <div className='font-bold text-nwhite1 bg-nblue4 rounded-full py-1 px-4'>1</div>
-                    <p>Instruksi 1: Mulai rekaman</p>
+                    <p>Instruksi 1: Mulai rekaman dengan menekan tombol "Mulai"</p>
                 </div>
                 <div className='flex space-x-2 items-center'>
                     <div className='font-bold text-nwhite1 bg-nblue4 rounded-full py-1 px-4'>2</div>
-                    <p>Instruksi 2: Hentikan rekaman</p>
+                    <p>Instruksi 2: Hentikan rekaman dengan menekan tombol "Hentikan"</p>
                 </div>
                 <div className='flex space-x-2 items-center'>
                     <div className='font-bold text-nwhite1 bg-nblue4 rounded-full py-1 px-4'>3</div>
-                    <p>Instruksi 3: Submit rekaman</p>
+                    <p>Instruksi 3: Submit rekaman dengan menekan tombol "Submit"</p>
                 </div>
             </div>
             <button className='font-bold text-nwhite1 bg-nblue4 rounded-full px-6 py-1 hover:bg-nblue3' onClick={handleStart}>Mulai</button>

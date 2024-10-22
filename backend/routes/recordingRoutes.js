@@ -6,12 +6,8 @@ const {
     getRecordingDetails
 } = require('../controllers/recordingController');
 
-// Routes for recording operations
 // POST /recordings - Submit a new recording
 router.post('/recordings', submitRecording);
-
-// GET /recordings/:id - Get details of a specific recording
-router.get('/recordings/:id', getRecordingDetails);
 
 
 module.exports = router;

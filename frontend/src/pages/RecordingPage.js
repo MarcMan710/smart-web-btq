@@ -2,50 +2,70 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const RecordingPage = ({ selectedHafalan }) => {
-    const [isRecording, setIsRecording] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
-    const [audioUrl, setAudioUrl] = useState(null);
+    const [recordingState, setRecordingState] = useState({
+        isRecording: false,
+        isPaused: false,
+        audioUrl: null,
+        isProcessing: false,
+        resultMessage: null,
+        finalScore: null
+    });
+
+    const { isRecording, isPaused, isProcessing, resultMessage, finalScore } = recordingState;
 
     const startRecording = () => {
-        setIsRecording(true);
-        setAudioUrl(null); // Reset audioUrl when starting a new recording
+        setRecordingState({
+            isRecording: true,
+            audioUrl: null,
+            resultMessage: null,
+            finalScore: null,
+            ...recordingState
+        });
         // Logic to start recording audio
     };
 
-    const pauseRecording = () => {
-        setIsPaused(true);
-        // Logic to pause recording
+    const stopRecording = (chunks) => {
+        setRecordingState({ ...recordingState, isRecording: false, isProcessing: true });
+        // Logic to stop recording and get the audio Blob
+        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' });
+        submitRecording(audioFile);
     };
-
-    const resumeRecording = () => {
-        setIsPaused(false);
-        // Logic to resume recording
-    };
-
-    const stopRecording = () => {
-        setIsRecording(false);
-        // Logic to stop recording and get the audio URL
-        const recordedAudioUrl = 'path/to/recorded/audio'; // Replace with actual logic
-        setAudioUrl(recordedAudioUrl);
-        submitRecording(recordedAudioUrl);
-    };
-
-    const submitRecording = async (audioUrl) => {
+    const submitRecording = async (audioFile) => {
         try {
-            const response = await axios.post('/api/recordings', { audioUrl });
-            console.log('Recording submitted and processed:', response.data);
+            const formData = new FormData();
+            formData.append('audioFile', audioFile);
+            formData.append('hafalanId', selectedHafalan.id);
+
+            const response = await axios.post('/api/recordings', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            const { finalScore } = response.data.recording;
+            setRecordingState({
+                finalScore,
+                resultMessage: finalScore >= 70 ? 'Selamat, Anda Lulus!' : 'Coba Lagi, Anda Tidak Lulus.',
+                isProcessing: false,
+                ...recordingState
+            });
         } catch (error) {
             console.error('Error submitting recording:', error);
+            setRecordingState({
+                resultMessage: 'Terjadi kesalahan, silakan coba lagi.',
+                isProcessing: false,
+                ...recordingState
+            });
         }
     };
 
     return (
         <div className='flex justify-center text-nblack4 px-6 py-44'>
-            {!isRecording && !audioUrl && (
+            {!isRecording && !recordingState.audioUrl && !isProcessing && !resultMessage && (
                 <div className='flex flex-col items-center space-y-4'>
                     <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
                     <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
-                    {/* Logo */}
                     <div className='p-6 bg-nwhite2 shadow-sm'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
                             <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
@@ -57,51 +77,21 @@ const RecordingPage = ({ selectedHafalan }) => {
             )}
             {isRecording && !isPaused && (
                 <div className='flex flex-col items-center space-y-4'>
-                    <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
-                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
-                    {/* Logo */}
-                    <div className='p-6 bg-nwhite2 shadow-sm text-ngreen'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
-                            <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
-                            <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.751 6.751 0 0 1-6 6.709v2.291h3a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1 0-1.5h3v-2.291a6.751 6.751 0 0 1-6-6.709v-1.5A.75.75 0 0 1 6 10.5Z" />
-                        </svg>
-                    </div>
-                    <p>Rekaman sedang berlangsung ...</p>
-                    <button className='font-bold text-nwhite1 bg-nblue4 py-1 px-6 rounded-full hover:bg-nblue3' onClick={pauseRecording}>Pause</button>
-                    <button className='font-bold text-nwhite1 bg-nblue4 py-1 px-6 rounded-full hover:bg-nblue3' onClick={stopRecording}>Selesai</button>
+                    <p>Rekaman sedang berlangsung...</p>
+                    <button onClick={stopRecording}>Berhenti</button>
                 </div>
             )}
-            {isRecording && isPaused && (
+            {isProcessing && (
                 <div className='flex flex-col items-center space-y-4'>
-                    <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
-                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
-                    {/* Logo */}
-                    <div className='p-6 bg-nwhite2 shadow-sm text-ngreen'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
-                            <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
-                            <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.751 6.751 0 0 1-6 6.709v2.291h3a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1 0-1.5h3v-2.291a6.751 6.751 0 0 1-6-6.709v-1.5A.75.75 0 0 1 6 10.5Z" />
-                        </svg>
-                    </div>
-                    <p>Rekaman di-pause. Tekan "Lanjutkan" untuk melanjutkan atau "Selesai" untuk mengakhiri.</p>
-                    <button className='font-bold text-nwhite1 bg-nblue4 py-1 px-6 rounded-full hover-bg-nblue3' onClick={resumeRecording}>Lanjutkan</button>
-                    <button className='font-bold text-nwhite1 bg-nblue4 py-1 px-6 rounded-full hover-bg-nblue3' onClick={stopRecording}>Selesai</button>
+                    <p>Rekaman sedang diproses...</p>
                 </div>
             )}
-            {audioUrl && (
+            {resultMessage && (
                 <div className='flex flex-col items-center space-y-4'>
-                    <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
-                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
-                    {/* Logo */}
-                    <div className='p-6 bg-nwhite2 shadow-sm text-ngreen'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
-                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <p>Rekaman selesai dan sedang diproses ...</p>
+                    <p>{resultMessage}</p>
+                    {finalScore !== null && <p>Nilai Akhir: {finalScore}</p>}
+                    <button onClick={() => window.location.href = '/dashboard'}>Kembali ke Dashboard</button>
                 </div>
-            )}
-            {isRecording && !audioUrl && (
-                <button className='font-bold text-nwhite1 bg-nblue4 py-1 px-6 rounded-full hover-bg-nblue3' disabled>Submit</button>
             )}
         </div>
     );

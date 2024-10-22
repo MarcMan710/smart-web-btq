@@ -23,7 +23,8 @@ const Navbar = () => {
 
             {/* Link */}
             <ul className='flex items-center'>
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/hafalan">Hafalan</Link></li>
+                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/dashboard">Dashboard</Link></li>
+                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/history">Histori</Link></li>
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/profile">Profil</Link></li>
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/about">Tentang</Link></li>
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nred/20'><button onClick={handleLogout}>Logout</button></li>
