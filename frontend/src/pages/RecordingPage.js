@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
-const RecordingPage = ({ selectedHafalan }) => {
+const RecordingPage = () => {
     const [recordingState, setRecordingState] = useState({
         isRecording: false,
         isPaused: false,
@@ -10,34 +11,65 @@ const RecordingPage = ({ selectedHafalan }) => {
         resultMessage: null,
         finalScore: null
     });
+    const location = useLocation();
+    const { selectedHafalan } = location.state || {};
+    const mediaRecorderRef = useRef(null);
+    const audioChunksRef = useRef([]);
 
-    const { isRecording, isPaused, isProcessing, resultMessage, finalScore } = recordingState;
+    const startRecording = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorderRef.current = new MediaRecorder(stream);
+            mediaRecorderRef.current.ondataavailable = (event) => {
+                audioChunksRef.current.push(event.data);
+            };
+            mediaRecorderRef.current.start();
 
-    const startRecording = () => {
-        setRecordingState({
-            isRecording: true,
-            audioUrl: null,
-            resultMessage: null,
-            finalScore: null,
-            ...recordingState
-        });
-        // Logic to start recording audio
+            setRecordingState({
+                ...recordingState,
+                isRecording: true,
+                audioUrl: null,
+                resultMessage: null,
+                finalScore: null
+            });
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+            setRecordingState({
+                ...recordingState,
+                resultMessage: 'Tidak dapat mengakses mikrofon. Silakan periksa izin Anda.'
+            });
+        }
     };
 
-    const stopRecording = (chunks) => {
+    const stopRecording = () => {
+        mediaRecorderRef.current.stop();
+        mediaRecorderRef.current.onstop = () => {
+            const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+            const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' });
+            audioChunksRef.current = [];
+            submitRecording(audioFile);
+        };
+
         setRecordingState({ ...recordingState, isRecording: false, isProcessing: true });
-        // Logic to stop recording and get the audio Blob
-        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
-        const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' });
-        submitRecording(audioFile);
     };
+
     const submitRecording = async (audioFile) => {
+        if (!selectedHafalan || !selectedHafalan._id) {
+            console.error('selectedHafalan is undefined or missing id');
+            setRecordingState({
+                ...recordingState,
+                resultMessage: 'Terjadi kesalahan, hafalan tidak ditemukan.',
+                isProcessing: false
+            });
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append('audioFile', audioFile);
-            formData.append('hafalanId', selectedHafalan.id);
+            formData.append('hafalanId', selectedHafalan._id);
 
-            const response = await axios.post('/api/recordings', formData, {
+            const response = await axios.post('http://localhost:5000/api/recordings', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -45,26 +77,26 @@ const RecordingPage = ({ selectedHafalan }) => {
 
             const { finalScore } = response.data.recording;
             setRecordingState({
+                ...recordingState,
                 finalScore,
-                resultMessage: finalScore >= 70 ? 'Selamat, Anda Lulus!' : 'Coba Lagi, Anda Tidak Lulus.',
-                isProcessing: false,
-                ...recordingState
+                resultMessage: finalScore >= 70 ? 'Selamat, Anda Lulus!' : 'Maaf, Anda Tidak Lulus. Silakan coba lagi.',
+                isProcessing: false
             });
         } catch (error) {
             console.error('Error submitting recording:', error);
             setRecordingState({
+                ...recordingState,
                 resultMessage: 'Terjadi kesalahan, silakan coba lagi.',
-                isProcessing: false,
-                ...recordingState
+                isProcessing: false
             });
         }
     };
 
     return (
         <div className='flex justify-center text-nblack4 px-6 py-44'>
-            {!isRecording && !recordingState.audioUrl && !isProcessing && !resultMessage && (
+            {!recordingState.isRecording && !recordingState.audioUrl && !recordingState.isProcessing && !recordingState.resultMessage && (
                 <div className='flex flex-col items-center space-y-4'>
-                    <h1 className='font-bold text-4xl'>Halaman Rekaman</h1>
+                    <h1 className='font-bold text-4xl'>Rekaman Hafalan</h1>
                     <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
                     <div className='p-6 bg-nwhite2 shadow-sm'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
@@ -75,21 +107,21 @@ const RecordingPage = ({ selectedHafalan }) => {
                     <button className='font-bold text-nwhite1 bg-nblue4 py-1 px-6 rounded-full hover:bg-nblue3' onClick={startRecording}>Mulai</button>
                 </div>
             )}
-            {isRecording && !isPaused && (
+            {recordingState.isRecording && !recordingState.isPaused && (
                 <div className='flex flex-col items-center space-y-4'>
                     <p>Rekaman sedang berlangsung...</p>
                     <button onClick={stopRecording}>Berhenti</button>
                 </div>
             )}
-            {isProcessing && (
+            {recordingState.isProcessing && (
                 <div className='flex flex-col items-center space-y-4'>
                     <p>Rekaman sedang diproses...</p>
                 </div>
             )}
-            {resultMessage && (
+            {recordingState.resultMessage && (
                 <div className='flex flex-col items-center space-y-4'>
-                    <p>{resultMessage}</p>
-                    {finalScore !== null && <p>Nilai Akhir: {finalScore}</p>}
+                    <p>{recordingState.resultMessage}</p>
+                    {recordingState.finalScore !== null && <p>Nilai Akhir: {recordingState.finalScore}</p>}
                     <button onClick={() => window.location.href = '/dashboard'}>Kembali ke Dashboard</button>
                 </div>
             )}

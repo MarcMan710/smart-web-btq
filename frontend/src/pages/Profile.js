@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import api from '../axiosConfig'; // Import the configured Axios instance
+import React, { useState, useEffect, useContext } from 'react';
+import api from '../axiosConfig';
+import AuthContext from '../context/AuthContext';
 
 const Profile = () => {
+    const { authState } = useContext(AuthContext);
     const [userData, setUserData] = useState({
         firstName: '',
         lastName: '',
@@ -13,8 +15,12 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const res = await api.get('/api/users');
-                console.log(res.data); // Tambahkan log ini
+                const res = await api.get('/api/users/profile', {
+                    headers: {
+                        Authorization: `Bearer ${authState.token}`
+                    }
+                });
+                console.log(res.data);
                 setUserData(res.data);
             } catch (err) {
                 console.error(err.message);
@@ -22,7 +28,7 @@ const Profile = () => {
         };
 
         fetchUserData();
-    }, []);
+    }, [authState.token]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,7 +41,11 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.put('/api/users', userData); // Use the configured Axios instance
+            await api.put('/api/users', userData, {
+                headers: {
+                    Authorization: `Bearer ${authState.token}`
+                }
+            });
             alert('Profile updated successfully');
         } catch (err) {
             console.error(err.message);

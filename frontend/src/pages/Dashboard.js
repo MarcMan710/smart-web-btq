@@ -1,9 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import api from '../axiosConfig';
+import AuthContext from '../context/AuthContext';
 import HafalanCard from '../components/HafalanCard';
 import HafalanModal from '../components/HafalanModal';
+import { useNavigate } from 'react-router-dom'; // Updated import
 
 const Dashboard = () => {
     const [selectedHafalan, setSelectedHafalan] = useState(null);
+    const { authState } = useContext(AuthContext);
+    const [firstName, setFirstName] = useState('');
+    const navigate = useNavigate(); // Updated hook
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const res = await api.get('/api/users/profile', {
+                    headers: {
+                        Authorization: `Bearer ${authState.token}`
+                    }
+                });
+                setFirstName(res.data.firstName);
+            } catch (err) {
+                console.error(err.message);
+            }
+        };
+
+        fetchUserData();
+    }, [authState.token]);
 
     // Hardcoded list of hafalan
     const hafalanList = [
@@ -12,6 +35,7 @@ const Dashboard = () => {
 
     const handleCardClick = (hafalan) => {
         setSelectedHafalan(hafalan);
+        navigate('/recording', { state: { selectedHafalan: hafalan } });
     };
 
     const handleCloseModal = () => {
@@ -41,7 +65,7 @@ const Dashboard = () => {
 
     return (
         <div className='flex flex-col items-center px-6 py-10 text-nblack4'>
-            <h1 className='font-bold text-4xl mb-2'>Assalamualaikum!</h1>
+            <h1 className='font-bold text-4xl'>Assalamualaikum, {firstName}!</h1>
             {renderHafalanCards()}
             {renderModal()}
         </div>

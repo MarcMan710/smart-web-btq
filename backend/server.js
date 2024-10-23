@@ -30,6 +30,7 @@ app.use(cors({
 
 // Middleware setup
 app.use(express.json()); // Parse JSON request bodies
+app.use(express.urlencoded({ extended: true }));
 
 // Define routes for different functionalities
 app.use('/api/auth', require('./routes/authRoutes'));
@@ -47,6 +48,12 @@ app.use(notFound);
 
 // Error Handling Middleware setup
 app.use(errorHandler);
+
+app.post('/api/recordings', (req, res) => {
+    // Logika untuk menangani rekaman
+    res.status(200).json({ message: 'Recording received' });
+});
+
 
 // Start the server on a specified port
 const PORT = process.env.PORT || 5000;
