@@ -11,8 +11,7 @@ const RecordingPage = () => {
         resultMessage: null,
         finalScore: null
     });
-    const location = useLocation();
-    const { selectedHafalan } = location.state || {};
+
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
 
@@ -25,19 +24,19 @@ const RecordingPage = () => {
             };
             mediaRecorderRef.current.start();
 
-            setRecordingState({
-                ...recordingState,
+            setRecordingState((prevState) => ({
+                ...prevState,
                 isRecording: true,
                 audioUrl: null,
                 resultMessage: null,
                 finalScore: null
-            });
+            }));
         } catch (error) {
             console.error('Error accessing microphone:', error);
-            setRecordingState({
-                ...recordingState,
+            setRecordingState((prevState) => ({
+                ...prevState,
                 resultMessage: 'Tidak dapat mengakses mikrofon. Silakan periksa izin Anda.'
-            });
+            }));
         }
     };
 
@@ -50,45 +49,35 @@ const RecordingPage = () => {
             submitRecording(audioFile);
         };
 
-        setRecordingState({ ...recordingState, isRecording: false, isProcessing: true });
+        setRecordingState((prevState) => ({ ...prevState, isRecording: false, isProcessing: true }));
     };
 
     const submitRecording = async (audioFile) => {
-        if (!selectedHafalan || !selectedHafalan._id) {
-            console.error('selectedHafalan is undefined or missing id');
-            setRecordingState({
-                ...recordingState,
-                resultMessage: 'Terjadi kesalahan, hafalan tidak ditemukan.',
-                isProcessing: false
-            });
-            return;
-        }
-
         try {
             const formData = new FormData();
             formData.append('audioFile', audioFile);
-            formData.append('hafalanId', selectedHafalan._id);
 
             const response = await axios.post('http://localhost:5000/api/recordings', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
                 }
             });
 
             const { finalScore } = response.data.recording;
-            setRecordingState({
-                ...recordingState,
+            setRecordingState((prevState) => ({
+                ...prevState,
                 finalScore,
                 resultMessage: finalScore >= 70 ? 'Selamat, Anda Lulus!' : 'Maaf, Anda Tidak Lulus. Silakan coba lagi.',
                 isProcessing: false
-            });
+            }));
         } catch (error) {
             console.error('Error submitting recording:', error);
-            setRecordingState({
-                ...recordingState,
+            setRecordingState((prevState) => ({
+                ...prevState,
                 resultMessage: 'Terjadi kesalahan, silakan coba lagi.',
                 isProcessing: false
-            });
+            }));
         }
     };
 
@@ -97,7 +86,6 @@ const RecordingPage = () => {
             {!recordingState.isRecording && !recordingState.audioUrl && !recordingState.isProcessing && !recordingState.resultMessage && (
                 <div className='flex flex-col items-center space-y-4'>
                     <h1 className='font-bold text-4xl'>Rekaman Hafalan</h1>
-                    <h2>{selectedHafalan ? selectedHafalan.title : 'No Hafalan selected'}</h2>
                     <div className='p-6 bg-nwhite2 shadow-sm'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
                             <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />

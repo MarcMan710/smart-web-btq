@@ -15,4 +15,10 @@ const notFound = (req, res, next) => {
     next(error);
 };
 
-module.exports = { errorHandler, notFound };
+// Utility function to handle errors
+const handleError = (res, err) => {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+};
+
+module.exports = { errorHandler, notFound, handleError };

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { submitRecording } = require('../controllers/recordingController');
+const { submitRecording, getUserRecordings } = require('../controllers/recordingController');
 const { protect } = require('../middleware/authMiddleware');
 const multer = require('multer');
 
@@ -18,5 +18,8 @@ const upload = multer({ storage: storage });
 
 // POST /api/recordings - Submit a new recording
 router.post('/', protect, upload.single('audioFile'), submitRecording);
+
+// GET /api/recordings/ - Route to get user recordings
+router.get('/', protect, getUserRecordings);
 
 module.exports = router;

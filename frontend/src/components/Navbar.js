@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const { authState, logout } = useContext(AuthContext);
 
+    // Function to handle logout
     const handleLogout = () => {
-        localStorage.removeItem('authToken');
+        logout(); // Call the logout function from AuthContext
         navigate('/login');
     };
 
+    // Array of navigation links
+    const navLinks = [
+        { to: '/dashboard', text: 'Dashboard' },
+        { to: '/history', text: 'Histori' },
+        { to: '/profile', text: 'Profil' },
+        { to: '/about', text: 'Tentang' }
+    ];
+
     return (
         <nav className='container mx-auto flex justify-between items-center p-4'>
-            {/* Logo */}
             <div className='flex items-center space-x-1'>
                 <div className='text-nblue1'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -21,13 +31,15 @@ const Navbar = () => {
                 <p className='font-bold text-nblack4 text-lg'>Smart Web BTQ</p>
             </div>
 
-            {/* Link */}
             <ul className='flex items-center'>
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/dashboard">Dashboard</Link></li>
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/history">Histori</Link></li>
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/profile">Profil</Link></li>
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'><Link to="/about">Tentang</Link></li>
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nred/20'><button onClick={handleLogout}>Logout</button></li>
+                {navLinks.map(({ to, text }) => (
+                    <li key={to} className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'>
+                        <Link to={to}>{text}</Link>
+                    </li>
+                ))}
+                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nred/20'>
+                    <button onClick={handleLogout}>Logout</button>
+                </li>
             </ul>
         </nav>
     );
