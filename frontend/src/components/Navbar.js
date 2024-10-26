@@ -21,7 +21,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className='container mx-auto flex justify-between items-center p-4'>
+        <nav className='flex justify-between items-center py-4 px-20'>
             <div className='flex items-center space-x-1'>
                 <div className='text-nblue1'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
