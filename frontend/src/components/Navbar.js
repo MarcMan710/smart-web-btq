@@ -15,7 +15,7 @@ const Navbar = () => {
     // Array of navigation links
     const navLinks = [
         { to: '/dashboard', text: 'Dashboard' },
-        { to: '/history', text: 'Histori' },
+        { to: '/history', text: 'Riwayat' },
         { to: '/profile', text: 'Profil' },
         { to: '/about', text: 'Tentang' }
     ];
@@ -38,7 +38,7 @@ const Navbar = () => {
                     </li>
                 ))}
                 <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nred/20'>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={handleLogout}>Keluar</button>
                 </li>
             </ul>
         </nav>
