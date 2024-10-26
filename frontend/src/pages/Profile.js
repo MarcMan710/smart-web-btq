@@ -6,10 +6,7 @@ const Profile = () => {
     const { authState } = useContext(AuthContext);
     const [userData, setUserData] = useState({
         firstName: '',
-        lastName: '',
-        level: '',
-        email: '',
-        password: ''
+        lastName: ''
     });
 
     useEffect(() => {
@@ -41,7 +38,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.put('/api/users', userData, {
+            await api.put('/api/users/profile', userData, {
                 headers: {
                     Authorization: `Bearer ${authState.token}`
                 }
