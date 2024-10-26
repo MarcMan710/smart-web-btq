@@ -14,8 +14,6 @@ router.route('/profile')
     .get(protect, getUserProfile) // GET /api/users/profile
     .put(protect, updateUserProfile); // PUT /api/users/profile
 
-router.get('/progress', protect, getUserProgress); // GET /api/users/progress
-
 router.get('/logout', logout, logoutUser); // GET /api/users/logout
 
 module.exports = router;

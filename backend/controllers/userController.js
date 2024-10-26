@@ -1,6 +1,7 @@
 // backend/controllers/userController.js
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const { handleError } = require('../middleware/errorMiddleware');
 
 // Helper function to handle server errors
 const handleServerError = (res, err) => {
@@ -23,27 +24,9 @@ exports.getUserProfile = async (req, res) => {
     }
 };
 
-// Function to get user progress
-exports.getUserProgress = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id, 'level completedModules');
-        
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.json({
-            level: user.level,
-            completedModules: user.completedModules
-        });
-    } catch (err) {
-        handleServerError(res, err);
-    }
-};
-
 // Function to update user profile
 exports.updateUserProfile = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, password } = req.body; // Ensure password is destructured if used
 
     try {
         const user = await User.findById(req.user.id);
@@ -54,7 +37,6 @@ exports.updateUserProfile = async (req, res) => {
 
         user.firstName = firstName || user.firstName;
         user.lastName = lastName || user.lastName;
-        user.email = email || user.email;
 
         if (password) {
             const salt = await bcrypt.genSalt(10);
@@ -62,15 +44,14 @@ exports.updateUserProfile = async (req, res) => {
         }
 
         const updatedUser = await user.save();
-        
+
         res.json({
             id: updatedUser._id,
             firstName: updatedUser.firstName,
             lastName: updatedUser.lastName,
-            email: updatedUser.email,
         });
     } catch (err) {
-        handleServerError(res, err);
+        handleError(res, err);
     }
 };
 
