@@ -27,14 +27,16 @@ exports.submitRecording = async (req, res) => {
     try {
         const recording = new Recording({
             userId: userId,
-            audioUrl: audioFile.path // Store the file path, not the file itself
+            audioUrl: audioFile.path, // Store the file path, not the file itself
+            status: 'pending_approval'
         });
 
         await recording.save();
 
         try {
             const aiResult = await processRecording(audioFile.path);
-            await updateRecordingStatus(recording, 'pending_approval', aiResult);
+            recording.aiResult = aiResult;
+            await recording.save();
             res.status(201).json({ message: 'Recording submitted and processed, awaiting approval', recording });
         } catch (aiError) {
             console.error('AI processing failed:', aiError);
@@ -54,7 +56,6 @@ exports.submitRecording = async (req, res) => {
             recording.passed = passed;
             await recording.save();
 
-            await updateRecordingStatus(recording, 'pending_approval', { finalScore });
             res.status(201).json({ message: 'Recording submitted with fallback score, awaiting approval', recording });
         }
     } catch (err) {
@@ -70,11 +71,11 @@ exports.submitRecording = async (req, res) => {
             initialScore: initialScore,
             wer: wer,
             finalScore: finalScore,
-            passed: finalScore >= 70
+            passed: finalScore >= 70,
+            status: 'pending_approval'
         });
 
         await recording.save();
-        await updateRecordingStatus(recording, 'pending_approval', { finalScore });
         res.status(500).json({ message: 'Recording submitted with fallback score due to an error', recording });
     }
 };
