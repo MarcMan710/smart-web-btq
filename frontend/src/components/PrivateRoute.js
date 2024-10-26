@@ -1,9 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Route, Navigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
     const { authState } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        // Check if the token is present and set the loading state accordingly
+        if (authState.token) {
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+        }
+    }, [authState.token]);
+
+    if (isLoading) {
+        // Optionally, you can return a loading spinner or similar component here
+        return <div>Loading...</div>;
+    }
 
     if (!authState.isAuthenticated) {
         // Redirect to login page if not authenticated
