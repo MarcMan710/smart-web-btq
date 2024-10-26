@@ -65,18 +65,6 @@ const Profile = () => {
                         <label htmlFor='lastName'>Last Name:</label>
                         <input className='px-2 py-1 rounded-md' type="text" name="lastName" id='lastName' value={userData.lastName} onChange={handleChange} />
                     </div>
-                    <div className='flex justify-between space-x-1'>
-                        <label htmlFor='level'>Level:</label>
-                        <input className='px-2 py-1 rounded-md' type="text" name="level" id='level' value={userData.level} readOnly />
-                    </div>
-                    <div className='flex justify-between space-x-1'>
-                        <label htmlFor='email'>Email:</label>
-                        <input className='px-2 py-1 rounded-md' type="email" name="email" id='email' value={userData.email} readOnly />
-                    </div>
-                    <div className='flex justify-between space-x-1'>
-                        <label htmlFor='password'>Password:</label>
-                        <input className='px-2 py-1 rounded-md' type="password" name="password" id='password' value={userData.password} readOnly />
-                    </div>
                 </div>
                 <button className='w-[340px] mt-8 font-bold text-nwhite1 bg-nblue4 py-2 rounded-full hover:bg-nblue1' type="submit">Update Profile</button>
             </form>
