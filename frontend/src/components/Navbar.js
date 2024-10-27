@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 const Navbar = () => {
@@ -20,6 +20,10 @@ const Navbar = () => {
         { to: '/about', text: 'Tentang' }
     ];
 
+    const activeClass = ({ isActive }) => isActive
+        ? "text-nblack4 px-2 py-2 rounded-md bg-nblue1/20"
+        : "text-nblack4 px-2 py-2 rounded-md hover:bg-nblue1/20";
+
     return (
         <nav className='flex justify-between items-center py-4 px-20'>
             <div className='flex items-center space-x-1'>
@@ -31,13 +35,15 @@ const Navbar = () => {
                 <p className='font-bold text-nblack4 text-lg'>Smart Web BTQ</p>
             </div>
 
-            <ul className='flex items-center'>
+            <ul className='flex items-center space-x-1'>
                 {navLinks.map(({ to, text }) => (
-                    <li key={to} className='text-nblack4 px-3 py-2 rounded-md hover:bg-nblue1/20'>
-                        <Link to={to}>{text}</Link>
+                    <li key={to}>
+                        <NavLink to={to} className={activeClass}>
+                            {text}
+                        </NavLink>
                     </li>
                 ))}
-                <li className='text-nblack4 px-3 py-2 rounded-md hover:bg-nred/20'>
+                <li className='text-nblack4 px-2 py-2 rounded-md hover:bg-nred/20'>
                     <button onClick={handleLogout}>Keluar</button>
                 </li>
             </ul>
