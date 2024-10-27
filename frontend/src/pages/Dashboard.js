@@ -3,13 +3,13 @@ import api from '../axiosConfig';
 import AuthContext from '../context/AuthContext';
 import HafalanCard from '../components/HafalanCard';
 import HafalanModal from '../components/HafalanModal';
-import { useNavigate } from 'react-router-dom'; // Updated import
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const [selectedHafalan, setSelectedHafalan] = useState(null);
     const { authState } = useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
-    const navigate = useNavigate(); // Updated hook
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -28,14 +28,12 @@ const Dashboard = () => {
         fetchUserData();
     }, [authState.token]);
 
-    // Hardcoded list of hafalan
     const hafalanList = [
-        { _id: '1', title: 'Surah Al-Fatihah', levelRequired: '1', description: 'Surah Al-Fatihah adalah Surah pertama dalam Kitab Al-Quran' }
+        { _id: '1', title: 'Surah Al-Fatihah', description: 'Surah Al-Fatihah adalah Surah pertama dalam Kitab Al-Quran' }
     ];
 
     const handleCardClick = (hafalan) => {
         setSelectedHafalan(hafalan);
-        navigate('/recording', { state: { selectedHafalan: hafalan } });
     };
 
     const handleCloseModal = () => {
@@ -69,7 +67,6 @@ const Dashboard = () => {
             <p className='text-sm text-nblack1 mb-4'>
                 Berikut adalah daftar hafalan yang bisa kamu lakukan
             </p>
-
             {renderHafalanCards()}
             {renderModal()}
         </div>

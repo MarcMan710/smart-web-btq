@@ -8,7 +8,6 @@ const HafalanCard = ({ hafalan, onClick }) => {
             onClick={onClick}
         >
             <h2 className='font-bold'>{hafalan.title}</h2>
-            <p>Level {hafalan.levelRequired}</p>
         </div>
     );
 };
