@@ -1,9 +1,11 @@
 // frontend/src/components/Button.js
-import React from 'react';
-
-const Button = ({ children, onClick, type = 'button', styleType = 'primary' }) => {
+const Button = ({ children, onClick, type = "button" }) => {
     return (
-        <button className={`btn btn-${styleType}`} onClick={onClick} type={type}>
+        <button
+            className="w-[16ch] font-bold text-nwhite1 bg-nblue4 py-2 rounded-lg hover:bg-nblue3"
+            type={type}
+            onClick={onClick}
+        >
             {children}
         </button>
     );
