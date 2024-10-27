@@ -25,7 +25,7 @@ const Navbar = () => {
         : "text-nblack4 px-2 py-2 rounded-md hover:bg-nblue1/20";
 
     return (
-        <nav className='flex justify-between items-center py-4 px-20'>
+        <nav className='flex justify-between items-center py-4 px-20 mb-4'>
             <div className='flex items-center space-x-1'>
                 <div className='text-nblue1'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
