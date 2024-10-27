@@ -31,8 +31,9 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col'>
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Email:</label>
+                        <label htmlFor='loginEmail'>Email:</label>
                         <input
+                            id='loginEmail'
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -41,8 +42,9 @@ const Login = () => {
                         />
                     </div>
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Password:</label>
+                        <label htmlFor='loginPassword'>Password:</label>
                         <input
+                            id='loginPassword'
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
