@@ -52,7 +52,7 @@ const Profile = () => {
 
     return (
         <div className='flex flex-col items-center text-nblack4'>
-            {/* <h1 className='font-bold text-4xl'>Profile Page</h1> */}
+            <h1 className='font-bold text-4xl mb-4'>Profil</h1>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col'>
                     <div className='flex items-center justify-between space-x-2 mb-2'>
