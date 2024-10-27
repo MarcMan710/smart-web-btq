@@ -16,7 +16,6 @@ const HafalanModal = ({ hafalan, onClose }) => {
                 </span>
                 <h2 className='font-semibold'>{hafalan.title}</h2>
                 <p>{hafalan.description}</p>
-                <p className='mb-4'>Level: {hafalan.levelRequired}</p>
                 <div className='flex space-x-4'>
                     <button className='font-semibold text-nwhite1 bg-nblue4 py-1 px-4 rounded-full hover-bg-nblue1' onClick={handleStartHafalan}>Mulai Hafalan</button>
                     <button className='font-semibold bg-nwhite2 py-1 px-4 rounded-full hover-bg-nwhite3' onClick={onClose}>Kembali</button>
