@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import Button from '../components/Button';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -60,12 +61,11 @@ const Login = () => {
                         <label htmlFor="rememberMeCheckbox">Ingat saya</label>
                     </div>
 
-                    <button
-                        className='mb-4 self-center w-[16ch] font-bold text-nwhite1 bg-nblue4 py-2 rounded-lg hover:bg-nblue3'
-                        type="submit"
-                    >
-                        Masuk
-                    </button>
+                    <div className='self-center mb-4'>
+                        <Button type='submit'>
+                            Masuk
+                        </Button>
+                    </div>
                 </div>
             </form>
             <p>
