@@ -43,7 +43,7 @@ const Dashboard = () => {
     };
 
     const renderHafalanCards = () => (
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-4">
             {hafalanList.map(hafalan => (
                 <HafalanCard
                     key={hafalan._id}
