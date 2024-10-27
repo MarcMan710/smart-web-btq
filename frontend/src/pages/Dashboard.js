@@ -45,10 +45,10 @@ const Dashboard = () => {
     const renderHafalanCards = () => (
         <div className="flex flex-col space-y-6">
             {hafalanList.map(hafalan => (
-                <HafalanCard 
-                    key={hafalan._id} 
-                    hafalan={hafalan} 
-                    onClick={() => handleCardClick(hafalan)} 
+                <HafalanCard
+                    key={hafalan._id}
+                    hafalan={hafalan}
+                    onClick={() => handleCardClick(hafalan)}
                 />
             ))}
         </div>
@@ -56,16 +56,20 @@ const Dashboard = () => {
 
     const renderModal = () => (
         selectedHafalan && (
-            <HafalanModal 
-                hafalan={selectedHafalan} 
-                onClose={handleCloseModal} 
+            <HafalanModal
+                hafalan={selectedHafalan}
+                onClose={handleCloseModal}
             />
         )
     );
 
     return (
-        <div className='flex flex-col items-center px-6 py-10 text-nblack4'>
-            <h1 className='font-bold text-4xl'>Assalamualaikum, {firstName}!</h1>
+        <div className='flex flex-col items-center text-nblack4'>
+            <h1 className='font-bold text-4xl mb-2'>Assalamualaikum, {firstName}!</h1>
+            <p className='text-sm text-nblack1 mb-4'>
+                Berikut adalah daftar hafalan yang bisa kamu lakukan
+            </p>
+
             {renderHafalanCards()}
             {renderModal()}
         </div>
