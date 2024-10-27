@@ -4,9 +4,10 @@ import React from 'react';
 const About = () => {
     return (
         <div className='flex flex-col items-center text-nblack4'>
-            <h1 className='font-bold text-4xl mb-2'>Smart Web BTQ</h1>
+            <h1 className='font-bold text-4xl mb-2'>Tentang</h1>
             <p className='w-[45ch] text-center text-sm mb-4'>
-                Adalah aplikasi pembelajaran baca tulis Al-Qur'an yang memanfaatkan
+                <span className='font-bold text-nblue4'>Smart Web BTQ </span>
+                adalah aplikasi pembelajaran baca tulis Al-Qur'an yang memanfaatkan
                 teknologi AI untuk proses penilaian otomatis
             </p>
 
