@@ -9,13 +9,27 @@ const HafalanModal = ({ hafalan, onClose }) => {
     };
 
     return (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-nblack4/30">
-            <div className="relative w-[45ch] p-6 bg-nwhite1 rounded-md text-nblack4">
-                <span className="absolute font-bold text-lg top-2 right-3 cursor-pointer bg-nwhite2 px-2 rounded-full hover-bg-nwhite3" onClick={onClose}>
+        <div
+            className="
+            fixed top-0 left-0 w-full h-full
+            flex justify-center items-center
+            bg-gradient-to-r from-nblue1/80 to-nblue4/80
+            z-10
+            "
+        >
+            <div className="relative w-[45ch] p-6 bg-nwhite1 rounded-md shadow-lg text-nblack4">
+                <span
+                    className="
+                absolute font-bold text-lg top-2 right-3 cursor-pointer
+                bg-nwhite2 px-2 rounded-full hover-bg-nwhite3
+                "
+                    onClick={onClose}
+                >
                     &times;
                 </span>
-                <h2 className='font-semibold'>{hafalan.title}</h2>
-                <p>{hafalan.description}</p>
+
+                <h1 className='font-bold mb-2'>{hafalan.title}</h1>
+                <p className='text-sm mb-4'>{hafalan.description}</p>
                 <div className='flex space-x-4'>
                     <button className='font-semibold text-nwhite1 bg-nblue4 py-1 px-4 rounded-full hover-bg-nblue1' onClick={handleStartHafalan}>Mulai Hafalan</button>
                     <button className='font-semibold bg-nwhite2 py-1 px-4 rounded-full hover-bg-nwhite3' onClick={onClose}>Kembali</button>
