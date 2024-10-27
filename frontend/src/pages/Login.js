@@ -23,33 +23,33 @@ const Login = () => {
     };
 
     return (
-        <div className='flex flex-col items-center space-y-6 my-28 text-nblack4'>
-            <h1 className='text-4xl font-bold'>
-                Login
+        <div className='flex flex-col items-center text-nblack4'>
+            <h1 className='text-4xl font-bold mb-4'>
+                Masuk
             </h1>
             <form onSubmit={handleSubmit}>
-                <div className='flex flex-col space-y-4 w-[340px]'>
-                    <div className='flex items-center justify-between space-x-2'>
+                <div className='flex flex-col'>
+                    <div className='flex items-center justify-between space-x-2 mb-2'>
                         <label>Email:</label>
                         <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className='px-2 py-1 rounded-md'
+                            className='px-2 py-1 rounded-md w-[24ch]'
                         />
                     </div>
-                    <div className='flex items-center justify-between space-x-2'>
+                    <div className='flex items-center justify-between space-x-2 mb-2'>
                         <label>Password:</label>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className='px-2 py-1 rounded-md'
+                            className='px-2 py-1 rounded-md w-[24ch]'
                         />
                     </div>
-                    <div className='flex items-center justify-center space-x-2'>
+                    <div className='flex items-center justify-center space-x-2 mb-2'>
                         <input
                             type="checkbox"
                             checked={rememberMe}
@@ -57,13 +57,19 @@ const Login = () => {
                             id="rememberMeCheckbox"
                             className='px-2 py-1 rounded-md'
                         />
-                        <label htmlFor="rememberMeCheckbox">Remember Me</label>
+                        <label htmlFor="rememberMeCheckbox">Ingat saya</label>
                     </div>
-                    <button className='w-full font-bold text-nwhite1 bg-nblue4 py-2 rounded-full hover:bg-nblue1' type="submit">Login</button>
+
+                    <button
+                        className='mb-4 self-center w-[16ch] font-bold text-nwhite1 bg-nblue4 py-2 rounded-lg hover:bg-nblue3'
+                        type="submit"
+                    >
+                        Masuk
+                    </button>
                 </div>
             </form>
             <p>
-                Belum punya akun? <a className='font-bold text-nblue4 hover:text-nblue3' href="/register">Register</a>
+                Belum punya akun? <a className='font-bold text-nblue4 hover:text-nblue3' href="/register">Daftar</a>
             </p>
         </div>
     );
