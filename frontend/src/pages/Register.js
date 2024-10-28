@@ -69,8 +69,9 @@ const Register = () => {
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col'>
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Nama depan:</label>
+                        <label htmlFor='regFirstName'>Nama Depan:</label>
                         <input
+                            id='regFirstName'
                             name="firstName"
                             type="text"
                             value={formData.firstName}
@@ -80,8 +81,9 @@ const Register = () => {
                         />
                     </div>
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Nama belakang:</label>
+                        <label htmlFor='regLastName'>Nama Belakang:</label>
                         <input
+                            id='regLastName'
                             name="lastName"
                             type="text"
                             value={formData.lastName}
@@ -91,8 +93,9 @@ const Register = () => {
                         />
                     </div>
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Email:</label>
+                        <label htmlFor='regEmail'>Email:</label>
                         <input
+                            id='regEmail'
                             name="email"
                             type="email"
                             value={formData.email}
@@ -108,8 +111,9 @@ const Register = () => {
                         </span>
                     }
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Password:</label>
+                        <label htmlFor='regPassword'>Password:</label>
                         <input
+                            id='regPassword'
                             name="password"
                             type="password"
                             value={formData.password}
@@ -125,8 +129,9 @@ const Register = () => {
                         </span>
                     }
                     <div className='flex items-center justify-between space-x-2 mb-2'>
-                        <label>Konfirmasi password:</label>
+                        <label htmlFor='regConfirmPassword'>Konfirmasi Password:</label>
                         <input
+                            id='regConfirmPassword'
                             name="confirmPassword"
                             type="password"
                             value={formData.confirmPassword}
