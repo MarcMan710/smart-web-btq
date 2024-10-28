@@ -22,7 +22,7 @@ const About = () => {
                     <div>
                         <p className='font-semibold'>Kemal Nur Rachman</p>
                         <p className='text-sm'>Backend Developer</p>
-                        <p className='text-sm'>kemal@example.com</p>
+                        <p className='text-sm'>kemal.nurr20@mhs.uinjkt.ac.id</p>
                     </div>
                 </div>
 
