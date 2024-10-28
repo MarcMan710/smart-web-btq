@@ -17,7 +17,12 @@ const PrivateRoute = ({ children }) => {
 
     if (isLoading) {
         // Optionally, you can return a loading spinner or similar component here
-        return <div>Loading...</div>;
+        return (
+            <div className='flex flex-col items-center'>
+                <h1 className='font-bold text-4xl mb-2'>Memuat ...</h1>
+                <p className='text-sm'>Mohon tunggu sejenak</p>
+            </div>
+        );
     }
 
     if (!authState.isAuthenticated) {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import moment from 'moment'; // Import moment for date formatting
 
 const HistoryPage = () => {
     const [recordings, setRecordings] = useState([]);
@@ -28,28 +27,33 @@ const HistoryPage = () => {
     }, []);
 
     return (
-        <div className="history-page">
-            <h1>History Page</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nama Hafalan</th>
-                        <th>Nilai</th>
-                        <th>Status</th>
-                        <th>Tanggal dan Waktu Rekaman</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Array.isArray(recordings) && recordings.map((recording) => (
-                        <tr key={recording._id}>
-                            <td>Surah Al-Fatihah</td>
-                            <td>{recording.finalScore}</td>
-                            <td>{recording.passed ? 'Lulus' : 'Tidak Lulus'}</td>
-                            <td>{new Date(recording.recordedAt).toLocaleString('id-ID', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
+        <div className="flex flex-col items-center text-nblack4">
+            <h1 className='text-4xl font-bold mb-4'>Riwayat</h1>
+
+            <div
+                className='bg-nwhite2 w-[45ch] px-6 py-4 rounded-lg mb-4'
+            >
+                <table className='w-full text-sm text-left'>
+                    <thead>
+                        <tr className='border-b-[1px] border-nblack1/30'>
+                            <th className='px-4 py-2'>Hafalan</th>
+                            <th className='px-4 py-2'>Nilai</th>
+                            <th className='px-4 py-2'>Status</th>
+                            <th className='px-4 py-2'>Waktu</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {Array.isArray(recordings) && recordings.map((recording) => (
+                            <tr key={recording._id} className='odd:bg-nwhite2 even:bg-nwhite3'>
+                                <td className='px-4 py-2'>Surah Al-Fatihah</td>
+                                <td className='px-4 py-2'>{recording.finalScore}</td>
+                                <td className='px-4 py-2'>{recording.passed ? 'Lulus' : 'Tidak Lulus'}</td>
+                                <td className='px-4 py-2'>{new Date(recording.recordedAt).toLocaleString('id-ID', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
