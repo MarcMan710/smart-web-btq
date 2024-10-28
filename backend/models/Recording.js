@@ -10,11 +10,14 @@ const RecordingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // Remove hafalanId field
     initialScore: Number,
     wer: Number,
     finalScore: Number,
-    passed: Boolean
+    passed: Boolean,
+    recordedAt: {
+        type: Date,
+        default: Date.now // Set default to current date and time
+    }
 });
 
 module.exports = mongoose.model('Recording', RecordingSchema);

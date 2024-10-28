@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import moment from 'moment'; // Import moment for date formatting
 
 const HistoryPage = () => {
     const [recordings, setRecordings] = useState([]);
@@ -33,8 +34,9 @@ const HistoryPage = () => {
                 <thead>
                     <tr>
                         <th>Nama Hafalan</th>
-                        <th>Final Score</th>
+                        <th>Nilai</th>
                         <th>Status</th>
+                        <th>Tanggal dan Waktu Rekaman</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +45,7 @@ const HistoryPage = () => {
                             <td>Surah Al-Fatihah</td>
                             <td>{recording.finalScore}</td>
                             <td>{recording.passed ? 'Lulus' : 'Tidak Lulus'}</td>
+                            <td>{new Date(recording.recordedAt).toLocaleString('id-ID', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                         </tr>
                     ))}
                 </tbody>

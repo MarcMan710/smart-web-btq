@@ -84,7 +84,7 @@ exports.getUserRecordings = async (req, res) => {
     const userId = req.user.id;
 
     try {
-        const recordings = await Recording.find({ userId: userId }).select('finalScore passed');
+        const recordings = await Recording.find({ userId: userId }).select('finalScore passed recordedAt');
         res.status(200).json(recordings);
     } catch (err) {
         console.error('Error fetching user recordings:', err);
