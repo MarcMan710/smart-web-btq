@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
             lastName,
             email,
             password: hashedPassword,
-            level: 1 // Removed role assignment
+            level: 1
         });
 
         const savedUser = await user.save();
