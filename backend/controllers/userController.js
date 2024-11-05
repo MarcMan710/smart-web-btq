@@ -12,7 +12,7 @@ const handleServerError = (res, err) => {
 // Function to get the user profile
 exports.getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password -confirmationToken -isConfirmed');
+        const user = await User.findById(req.user.id).select('-password');
         
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

@@ -28,8 +28,7 @@ const registerUser = async (req, res) => {
             firstName,
             lastName,
             email,
-            password: hashedPassword,
-            level: 1
+            password: hashedPassword
         });
 
         const savedUser = await user.save();

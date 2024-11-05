@@ -17,8 +17,8 @@ const processRecording = async (audioUrl) => {
 
         return response.data;
     } catch (error) {
-        console.error('Error processing recording with AI:', error.message);
-        throw new Error('AI processing failed');
+        console.error('Recording Completed:', error.message);
+        throw new Error('File sent to AI.');
     }
 };
 

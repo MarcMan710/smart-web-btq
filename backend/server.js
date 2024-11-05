@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const winston = require('winston');
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
-const hafalanRoutes = require('./routes/hafalanRoutes');
+const surahRoutes = require('./routes/surahRoutes');
 const cors = require('cors');
 
 // Load environment variables from .env file
@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/recordings', require('./routes/recordingRoutes'));
-app.use('/api/hafalan', hafalanRoutes);
+app.use('/api/surah', surahRoutes);
 
 // Root route response
 app.get('/', (req, res) => {
@@ -53,7 +53,6 @@ app.post('/api/recordings', (req, res) => {
     // Logika untuk menangani rekaman
     res.status(200).json({ message: 'Recording received' });
 });
-
 
 // Start the server on a specified port
 const PORT = process.env.PORT || 5000;

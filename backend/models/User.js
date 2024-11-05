@@ -21,13 +21,6 @@ const userSchema = new Schema({
     // User Role and Progress
     level: { type: Number, default: 1 }, // Level of the user with default as 1
     completedModules: { type: Number, default: 0 }, // Number of completed modules
-
-    // Account Confirmation
-    confirmationToken: { 
-        type: String, 
-        default: () => randomBytes(20).toString('hex') 
-    }, // Confirmation token generated using crypto
-    isConfirmed: { type: Boolean, default: false } // Flag to indicate if the user is confirmed
 });
 
 // Creating the 'User' model based on the schema

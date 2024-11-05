@@ -1,4 +1,4 @@
-// backend/utils/auth.js
+// backend/utils/authUtils.js
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { jwtSecret } = require('../config/keys');
@@ -9,7 +9,7 @@ const { jwtSecret } = require('../config/keys');
  * @returns {string} - The generated JWT token.
  */
 const generateToken = (user) => {
-    return jwt.sign({ id: user._id, role: user.role }, jwtSecret, {
+    return jwt.sign({ id: user._id }, jwtSecret, {
         expiresIn: '1h'
     });
 };

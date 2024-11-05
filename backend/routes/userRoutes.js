@@ -6,7 +6,7 @@ const userController = require('../controllers/userController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Destructure methods from userController and authMiddleware for clarity
-const { getUserProfile, updateUserProfile, getUserProgress, logoutUser } = userController;
+const { getUserProfile, updateUserProfile, logoutUser } = userController;
 const { protect, logout } = authMiddleware;
 
 // Define routes with appropriate HTTP methods and middleware

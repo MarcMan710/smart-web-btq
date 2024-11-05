@@ -3,7 +3,7 @@ const mongoose = require('mongoose'); // Importing mongoose for MongoDB object m
 const User = require('./User'); // Assuming User model is in the same directory
 
 // Defining the schema for the 'Hafalan' model
-const hafalanSchema = new mongoose.Schema({
+const surahSchema = new mongoose.Schema({
     title: { type: String, required: true }, // Title of the hafalan
     levelRequired: { type: Number, required: true }, // Level required to access the hafalan
     description: { type: String, required: true } // Description of the hafalan
@@ -12,6 +12,6 @@ const hafalanSchema = new mongoose.Schema({
 });
 
 // Creating the 'Hafalan' model based on the schema
-const Hafalan = mongoose.model('Hafalan', hafalanSchema);
+const Surah = mongoose.model('Hafalan', surahSchema);
 
-module.exports = Hafalan; // Exporting the 'Hafalan' model for external usecd
+module.exports = Surah; // Exporting the 'Hafalan' model for external usecd
