@@ -35,7 +35,7 @@ const HistoryPage = () => {
     <div className="flex flex-col items-center text-nblack4">
       <h1 className="text-4xl font-bold mb-4">Riwayat</h1>
 
-      <div className="bg-nwhite2 w-[60ch] px-6 py-4 rounded-lg mb-4">
+      <div className="bg-nwhite2 w-[60ch] px-6 py-4 rounded-lg mb-20">
         <table className="w-full text-sm text-left">
           <thead>
             <tr className="border-b-[1px] border-nblack1/30">
