@@ -70,12 +70,13 @@ const Dashboard = () => {
       {renderHafalanCards()}
       {renderModal()}
 
+      {/* temporary read UI */}
       <p className="text-sm text-nblack1 mt-6 mb-4">
         Berikut adalah daftar surah yang bisa kamu baca
       </p>
 
       <div
-        className="flex justify-between bg-gradient-to-l from-norange/80 to-norange/30 shadow-md rounded-md p-6 w-[45ch] cursor-pointer mb-2"
+        className="flex justify-between bg-gradient-to-l from-norange/30 to-norange/80 shadow-md rounded-md p-6 w-[45ch] cursor-pointer mb-2"
         onClick={() => navigate("/read")}
       >
         <h2 className="font-bold">Surah Al-Baqarah</h2>
@@ -90,7 +91,7 @@ const Dashboard = () => {
       </div>
 
       <div
-        className="flex justify-between bg-gradient-to-l from-norange/80 to-norange/30 shadow-md rounded-md p-6 w-[45ch] cursor-pointer mb-2"
+        className="flex justify-between bg-gradient-to-l from-norange/30 to-norange/80 shadow-md rounded-md p-6 w-[45ch] cursor-pointer mb-2"
         onClick={() => navigate("/read")}
       >
         <h2 className="font-bold">Surah Al-Mulk</h2>
@@ -105,7 +106,7 @@ const Dashboard = () => {
       </div>
 
       <div
-        className="flex justify-between bg-gradient-to-l from-norange/80 to-norange/30 shadow-md rounded-md p-6 w-[45ch] cursor-pointer mb-20"
+        className="flex justify-between bg-gradient-to-l from-norange/30 to-norange/80 shadow-md rounded-md p-6 w-[45ch] cursor-pointer mb-20"
         onClick={() => navigate("/read")}
       >
         <h2 className="font-bold">Surah Yasin</h2>
