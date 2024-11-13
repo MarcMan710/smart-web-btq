@@ -11,7 +11,7 @@ const Home = () => {
         </h1>
         <p className="text-sm text-nblack1 mb-4">
           Solusi lengkap untuk pembelajaran Al-Qur'an menggunakan teknologi
-          Artificial Intelligent
+          Artificial Intelligence
         </p>
         <div className="font-bold text-nblue4 mb-6">
           <Link className="hover:text-nblue3" to="/register">
