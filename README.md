@@ -68,24 +68,23 @@ Once both the backend and frontend servers are running, you can access the appli
 
 ### Users
 
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user by ID
+- `GET /api/users` - Get user data
+- `PUT /api/users` - Update user data
+
+### Surah
+- `GET /api/surah` - Get list of surah
 
 ### Recordings
+- `GET /api/recordings` - Get recordings history
+- `POST /api/recordings` - Submit recording
 
-- `GET /api/recordings` - Get all recordings
-- `POST /api/recordings` - Create a new recording
-
-### Hafalan
-
-- `GET /api/hafalan` - Get all hafalan
-- `POST /api/hafalan` - Create a new hafalan
 
 ## Environment Variables
 
 Create a `.env` file in the backend directory and add the following variables:
 
 PORT=5000 
-MONGO_URI=your_mongodb_connection_string 
+CLOUD_MONGO_URI=your_cloud_mongodb_connection_string
+LOCAL_MONGO_URI=your_local_mongodb_connection_string 
 JWT_SECRET=your_jwt_secret
 
