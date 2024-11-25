@@ -11,7 +11,7 @@ const Home = () => {
         </h1>
         <p className="text-sm text-nblack1 mb-4">
           Solusi lengkap untuk pembelajaran Al-Qur'an menggunakan teknologi
-          Artificial Intelligent
+          Artificial Intelligence
         </p>
         <div className="font-bold text-nblue4 mb-6">
           <Link className="hover:text-nblue3" to="/register">
@@ -64,10 +64,11 @@ const Home = () => {
             </svg>
           </div>
           <p className="font-bold mb-2">
-            <i>Artificial Intelligent</i>
+            <i>Speech Recognition</i>
           </p>
           <p className="text-sm text-center text-nblack1">
-            Aplikasi menggunakan model AI untuk memberikan penilaian yang sesuai
+            Aplikasi menggunakan model AI untuk penilaian otomatis kepada
+            hafalan
           </p>
         </div>
 
