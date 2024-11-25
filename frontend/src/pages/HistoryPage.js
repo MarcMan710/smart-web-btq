@@ -53,7 +53,7 @@ const HistoryPage = () => {
                   className="odd:bg-nwhite2 even:bg-nwhite3"
                 >
                   <td className="px-4 py-2">Surah Al-Fatihah</td>
-                  <td className="px-4 py-2">{recording.finalScore}</td>
+                  <td className="px-4 py-2">{recording.score}</td>
                   <td className="px-4 py-2">
                     {recording.passed ? "Lulus" : "Tidak Lulus"}
                   </td>

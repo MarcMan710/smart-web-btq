@@ -1,29 +1,21 @@
 // backend/models/User.js
-// Importing required modules
-const { Schema, model } = require('mongoose'); // Destructuring mongoose for cleaner code
-const { randomBytes } = require('crypto'); // Destructuring crypto for cleaner code
+// Mengimport mongoose untuk membuat model
+const { Schema, model } = require('mongoose');
 
-// Defining the schema for the 'User' model
+// Mendefinisikan schema untuk model User
 const userSchema = new Schema({
-    // Personal Information
-    firstName: { type: String, required: true }, // First name of the user
-    lastName: { type: String, required: true }, // Last name of the user
-
-    // Authentication Information
+    firstName: { type: String, required: true }, // Nama awal pengguna
+    lastName: { type: String, required: true }, // Nama akhir pengguna
     email: { 
-        type: String, 
-        required: true, 
-        unique: true, 
-        match: /.+\@.+\..+/ // Basic email validation
-    }, // Unique email address of the user
-    password: { type: String, required: true }, // Password of the user
-
-    // User Role and Progress
-    level: { type: Number, default: 1 }, // Level of the user with default as 1
-    completedModules: { type: Number, default: 0 }, // Number of completed modules
+        type: String, // Kolom email bertipe string
+        required: true, // Kolom email harus diisi
+        unique: true, // Kolom email harus unik
+        match: /.+\@.+\..+/ // Kolom email harus memiliki format email
+    }, // 
+    password: { type: String, required: true }, // Password akun
 });
 
-// Creating the 'User' model based on the schema
-const User = model('User', userSchema);
+// Membuat model User berdasarkan schema
+const User = model('User', userSchema); 
 
-module.exports = User; // Exporting the 'User' model for external use
+module.exports = User; // Ekspor model User

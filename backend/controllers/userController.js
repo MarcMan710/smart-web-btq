@@ -1,62 +1,43 @@
 // backend/controllers/userController.js
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
+// Mengimpor modul yang diperlukan
+const User = require('../models/User'); 
+const bcrypt = require('bcryptjs'); 
 const { handleError } = require('../middleware/errorMiddleware');
 
-// Helper function to handle server errors
-const handleServerError = (res, err) => {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-};
-
-// Function to get the user profile
+// Fungsi untuk mendapatkan profil pengguna
 exports.getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password');
-        
+        const user = await User.findById(req.user.id).select('-password'); // Mengambil data pengguna tanpa password
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'User not found' }); // Pesan error jika pengguna tidak ditemukan
         }
-        
         res.json(user);
-    } catch (err) {
-        handleServerError(res, err);
-    }
-};
-
-// Function to update user profile
-exports.updateUserProfile = async (req, res) => {
-    const { firstName, lastName, password } = req.body; // Ensure password is destructured if used
-
-    try {
-        const user = await User.findById(req.user.id);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        user.firstName = firstName || user.firstName;
-        user.lastName = lastName || user.lastName;
-
-        if (password) {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(password, salt);
-        }
-
-        const updatedUser = await user.save();
-
-        res.json({
-            id: updatedUser._id,
-            firstName: updatedUser.firstName,
-            lastName: updatedUser.lastName,
-        });
-    } catch (err) {
+    } catch (err) { // Menangani kesalahan ketika terjadi error
         handleError(res, err);
     }
 };
 
-// Function to handle user logout
-exports.logoutUser = (req, res) => {
-    req.user = null; // Clear the user from the request object
-    res.json({ message: 'User logged out successfully' });
+// Fungsi untuk memperbarui profil pengguna
+exports.updateUserProfile = async (req, res) => {
+    const { firstName, lastName, password } = req.body;
+
+    try {
+        const user = await User.findById(req.user.id); // Mengambil data pengguna
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' }); // Pesan error jika pengguna tidak ditemukan
+        }
+        // Memperbarui informasi pengguna 
+        user.firstName = firstName || user.firstName; 
+        user.lastName = lastName || user.lastName;
+
+        const updatedUser = await user.save(); // Menyimpan perubahan informasi pengguna ke database
+        // Mengirimkan informasi pengguna yang telah diperbarui
+        res.json({ 
+            id: updatedUser._id,
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+        });
+    } catch (err) { // Menangani kesalahan ketika terjadi error
+        handleError(res, err);
+    }
 };

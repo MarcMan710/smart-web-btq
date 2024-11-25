@@ -1,33 +1,12 @@
 // backend/routes/surahRoutes.js
-// Importing required modules
+// Mengimport modul yang diperlukan
 const express = require('express');
 const router = express.Router();
-
-// Importing controllers
-const {
-    getAllSurah,
-    getSurahDetails,
-    createOrUpdateSurah,
-    deleteSurah
-} = require('../controllers/surahController');
-
-// Importing middleware
+const { getAllSurah } = require('../controllers/surahController');
 const { protect } = require('../middleware/authMiddleware');
 
-// Route to get all surah
-// GET /api/surah
+// GET /api/surah - Rute untuk mendapatkan semua surah
 router.get('/', protect, getAllSurah);
 
-// Route to get details of a specific surah
-// GET /api/surah/:id
-router.get('/:id', protect, getSurahDetails);
-
-// Route to create or update a surah 
-// POST /api/surah
-router.post('/', protect, createOrUpdateSurah);
-
-// Route to delete a specific surah
-// DELETE /api/surah/:id
-router.delete('/:id', protect, deleteSurah);
-
+// Ekspor router
 module.exports = router;

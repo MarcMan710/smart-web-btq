@@ -1,18 +1,26 @@
 // backend/config/db.js
-// Importing required modules
+// Mengimpor modul yang diperlukan
 const mongoose = require('mongoose');
-const config = require('./keys'); // Import the keys configuration file
+const dotenv = require('dotenv');
 
-// Function to connect to the MongoDB database
+// Memuat variabel lingkungan dari file .env
+dotenv.config();
+
+// Fungsi untuk menghubungkan ke MongoDB
 const connectDB = async () => {
     try {
-        // Connect to the MongoDB database using the URI from the keys configuration
-        await mongoose.connect(config.mongoURI);
-        console.log('MongoDB Connected...'); // Log a success message if the connection is successful
+        await mongoose.connect(process.env.CLOUD_MONGO_URI);
+        console.log('Connected to MongoDB.');
     } catch (err) {
-        console.error(err.message);
-        throw new Error('Connection failed');
+        try {
+            await mongoose.connect(process.env.LOCAL_MONGO_URI);
+            console.log('Connected to MongoDB.');
+        } catch (localErr) {
+            console.error(localErr.message);
+            throw new Error('Failed to connect to Database.');
+        }
     }
 };
 
-module.exports = connectDB; // Export the connectDB function to be used in other parts of the application
+// Ekspor fungsi connectDB
+module.exports = connectDB; 

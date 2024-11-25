@@ -1,59 +1,51 @@
-// Import necessary modules and configurations
+// Mengimport modul yang diperlukan
 const express = require('express');
 const dotenv = require('dotenv');
-const winston = require('winston');
 const connectDB = require('./config/db');
-const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const { notFound, serverError } = require('./middleware/errorMiddleware');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const recordingRoutes = require('./routes/recordingRoutes');
 const surahRoutes = require('./routes/surahRoutes');
 const cors = require('cors');
 
-// Load environment variables from .env file
+// Memuat variabel lingkungan dari file .env
 dotenv.config();
 
-// Connect to the MongoDB database
+// Koneksi ke database
 (async () => {
     try {
         await connectDB();
     } catch (err) {
-        winston.error(`Database connection failed: ${err.message}`);
+        console.error(err.message);
         process.exit(1);
     }
 })();
 
-// Initialize Express application
+// Inisialisasi Express
 const app = express();
 
-// Allow requests from frontend running on port 3000
+// Mengizinkan Frontend untuk mengakses backend
 app.use(cors({
     origin: 'http://localhost:3000'
 }));
 
-// Middleware setup
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true }));
+// Setup middleware
+app.use(express.json()); // Middleware untuk mengurai permintaan JSON
+app.use(express.urlencoded({ extended: true })); // Middleware untuk mengurai permintaan URL
 
-// Define routes for different functionalities
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/recordings', require('./routes/recordingRoutes'));
+// Mendefinisikan rute untuk berbagai fungsionalitas
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/recordings', recordingRoutes);
 app.use('/api/surah', surahRoutes);
 
-// Root route response
-app.get('/', (req, res) => {
-    res.send('Welcome to Smart Web BTQ!');
-});
-
-// Middleware to handle 404 errors for unknown routes
+// Middleware untuk menangani rute yang tidak ditemukan
 app.use(notFound);
 
-// Error Handling Middleware setup
-app.use(errorHandler);
+// Middleware untuk menangani kesalahan server
+app.use(serverError);
 
-app.post('/api/recordings', (req, res) => {
-    // Logika untuk menangani rekaman
-    res.status(200).json({ message: 'Recording received' });
-});
-
-// Start the server on a specified port
-const PORT = process.env.PORT || 5000;
+// Memulai server pada port tertentu
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

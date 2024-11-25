@@ -1,25 +1,18 @@
+// Mengimport modul yang diperlukan
 const express = require('express');
 const router = express.Router();
-const { submitRecording, getUserRecordings } = require('../controllers/recordingController');
+const { submitRecording, getUserRecordings, storage } = require('../controllers/recordingController');
 const { protect } = require('../middleware/authMiddleware');
 const multer = require('multer');
 
-// Configure multer for file storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Ensure this directory exists
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-
+// Menggunakan Multer untuk mengupload file
 const upload = multer({ storage: storage });
 
-// POST /api/recordings - Submit a new recording
+// POST /api/recordings - Rute untuk mengirim rekaman
 router.post('/', protect, upload.single('audioFile'), submitRecording);
 
-// GET /api/recordings/ - Route to get user recordings
+// GET /api/recordings/ - Rute untuk mendapatkan daftar rekaman
 router.get('/', protect, getUserRecordings);
 
+// Ekspor router
 module.exports = router;

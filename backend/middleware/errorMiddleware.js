@@ -1,24 +1,24 @@
 // backend/middleware/errorMiddleware.js
-// Error handling middleware function
-const errorHandler = (err, req, res, next) => {
-    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+// Fungsi Middleware untuk menangani kesalahan pada server
+const serverError = (err, req, res, next) => {
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode; // Menentukan status code berdasarkan kondisi
     res.status(statusCode).json({
-        message: err.message,
-        stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+        message: err.message, // Menampilkan pesan kesalahan
+        stack: process.env.NODE_ENV === 'production' ? null : err.stack, // Menampilkan stack trace hanya dalam mode development
     });
 };
 
-// Middleware function to handle 404 errors for unknown routes
+// Fungsi Middleware untuk menangani rute yang tidak ditemukan
 const notFound = (req, res, next) => {
-    const error = new Error(`Not Found - ${req.originalUrl}`);
-    res.status(404);
-    next(error);
+    const error = new Error(`Not Found - ${req.originalUrl}`); // Membuat objek kesalahan
+    res.status(404); // Mengatur status code
+    next(error); // Memanggil middleware selanjutnya
 };
 
-// Utility function to handle errors
+// Fungsi untuk menangani kesalahan server
 const handleError = (res, err) => {
     console.error(err.message);
     res.status(500).send('Server Error');
 };
-
-module.exports = { errorHandler, notFound, handleError };
+// Ekspor fungsi error middleware
+module.exports = { serverError, notFound, handleError };

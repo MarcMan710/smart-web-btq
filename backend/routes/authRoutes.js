@@ -1,24 +1,15 @@
-// Import necessary modules
+// Mengimport modul yang diperlukan
 const express = require('express');
 const { registerUser, loginUser } = require('../controllers/authController');
-const { protect } = require('../middleware/authMiddleware');
 
-// Initialize the router
+// Inisialisasi Express Router
 const router = express.Router();
 
-// Route to handle user registration
-// POST /api/auth/register
+// POST /api/auth/register - Rute untuk registrasi pengguna
 router.post('/register', registerUser);
 
-// Route to handle user login authentication and token generation
-// POST /api/auth/login
+// POST /api/auth/login - Rute untuk login pengguna
 router.post('/login', loginUser);
 
-// Route to access the dashboard, requires authentication
-// GET /api/auth/dashboard
-router.get('/dashboard', protect, (req, res) => {
-    res.json({ message: 'Welcome to the Smart Web BTQ!' });
-});
-
-// Export the router
+// Ekspor router
 module.exports = router;

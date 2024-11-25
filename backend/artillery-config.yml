@@ -1,67 +1,83 @@
 config:
-  target: "http://localhost:5000" # Ganti dengan URL aplikasi Anda jika berbeda
+  target: "http://localhost:5000" # Backend PORT
   phases:
     - duration: 60
       arrivalRate: 10
   defaults:
     headers:
       Content-Type: "application/json"
+
+variables:
+  defaultPassword: "password123"
+  newPassword: "newpassword123"
+  authHeader: "Bearer {{ token }}"
+
 scenarios:
-  - name: "Submit Recording"
+  - name: "Register User"
     flow:
       - post:
-          url: "/api/recordings"
+          url: "/api/users/register"
           json:
-            audioUrl: "http://example.com/audio.mp3"
-            hafalanId: "12345"
+            firstName: "FirstName"
+            lastName: "LastName"
+            email: "KZS4K@example.com"
+            password: "{{ defaultPassword }}"
           expect:
             - statusCode: 201
-
-  - name: "Get Recording Details"
-    flow:
-      - get:
-          url: "/api/recordings/12345"
-          expect:
-            - statusCode: 200
-
-  - name: "Root Route"
-    flow:
-      - get:
-          url: "/"
-          expect:
-            - statusCode: 200
-
-  - name: "User Registration"
-    flow:
-      - post:
-          url: "/api/auth/register"
-          json:
-            firstName: "{{ firstName }}"
-            lastName: "{{ lastName }}"
-            username: "{{ username }}"
-            email: "{{ email }}"
-            password: "password123"
-            confirmPassword: "password123"
-          expect:
-            - statusCode: 201
-    payload:
-      path: "register_user.csv"
-      fields:
-        - "firstName"
-        - "lastName"
-        - "username"
-        - "email"
-
-  - name: "User Login"
+  - name: "Login User"
     flow:
       - post:
           url: "/api/auth/login"
           json:
-            email: "{{ email }}"
-            password: "password123"
+            email: "KZS4K@example.com"
+            password: "{{ defaultPassword }}"
           expect:
             - statusCode: 200
-    payload:
-      path: "login_users.csv"
-      fields:
-        - "email"
+
+  - name: "Get User Profile"
+    flow:
+      - get:
+          url: "/api/users/profile"
+          headers:
+            Authorization: "{{ authHeader }}"
+          expect:
+            - statusCode: 200
+
+  - name: "Update User Profile"
+    flow:
+      - put:
+          url: "/api/users/profile"
+          headers:
+            Authorization: "{{ authHeader }}"
+          json:
+            firstName: "UpdatedFirstName"
+            lastName: "UpdatedLastName"
+          expect:
+            - statusCode: 200
+
+  - name: "Get Surah List"
+    flow:
+      - get:
+          url: "/api/surah"
+          expect:
+            - statusCode: 200
+
+  - name: "Submit Recording"
+    flow:
+      - post:
+          url: "/api/recordings"
+          headers:
+            Authorization: "{{ authHeader }}"
+          formData:
+            file: "uploads/"
+          expect:
+            - statusCode: 201
+
+  - name: "Get Recording History"
+    flow:
+      - get:
+          url: "/api/recordings"
+          headers:
+            Authorization: "{{ authHeader }}"
+          expect:
+            - statusCode: 200
