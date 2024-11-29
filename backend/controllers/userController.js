@@ -1,13 +1,12 @@
 // backend/controllers/userController.js
 // Mengimpor modul yang diperlukan
 const User = require('../models/User'); 
-const bcrypt = require('bcryptjs'); 
 const { handleError } = require('../middleware/errorMiddleware');
 
 // Fungsi untuk mendapatkan profil pengguna
 exports.getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password'); // Mengambil data pengguna tanpa password
+        const user = await User.findById(req.user.id).select('-email -password -__v'); // Mengambil data pengguna tanpa password
         if (!user) {
             return res.status(404).json({ message: 'User not found' }); // Pesan error jika pengguna tidak ditemukan
         }

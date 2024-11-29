@@ -8,6 +8,11 @@ const RecordingSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    surahId: { // Relasi ke model User
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Surah',
+        required: true
+    },
     audioUrl: { // URL audio
         type: String,
         required: true

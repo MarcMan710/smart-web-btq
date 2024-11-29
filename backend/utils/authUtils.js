@@ -7,13 +7,6 @@ const dotenv = require('dotenv');
 // Memuat variabel lingkungan dari file .env
 dotenv.config();
 
-// Fungsi untuk membuat token JWT
-const generateToken = (user) => {
-    return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '1h' // Token berlaku selama 1 jam
-    });
-};
-
 // Fungsi untuk mengenkripsi password menggunakan bcrypt
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10); // Menentukan salt dengan ukuran 10 byte
@@ -27,7 +20,6 @@ const comparePassword = async (inputPassword, hashedPassword) => {
 
 // Ekspor fungsi
 module.exports = {
-    generateToken,
     hashPassword,
     comparePassword
 };

@@ -1,7 +1,7 @@
 // backend/controllers/authController.js
 // Mengimpor modul yang diperlukan
 const User = require('../models/User');
-const { hashPassword, generateToken } = require('../utils/authUtils');
+const { hashPassword } = require('../utils/authUtils');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
@@ -35,15 +35,12 @@ const registerUser = async (req, res) => {
         });
         // Menyimpan pengguna ke database
         const savedUser = await user.save();
-        // Membuat token JWT untuk pengguna yang baru didaftarkan
-        const token = generateToken(savedUser);
         // Mengirimkan informasi pengguna yang baru didaftarkan dan token ke klien
         res.status(201).json({
             _id: savedUser._id,
             firstName: savedUser.firstName,
             lastName: savedUser.lastName,
-            email: savedUser.email,
-            token
+            email: savedUser.email
         });
     } catch (error) { // Menangani kesalahan ketika terjadi error dalam proses mendaftarkan pengguna
         console.error('Error registering user:', error);

@@ -16,9 +16,10 @@ const notFound = (req, res, next) => {
 };
 
 // Fungsi untuk menangani kesalahan server
-const handleError = (res, err) => {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-};
+function handleError(res, error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'An error occurred', error: error.message });
+}
+
 // Ekspor fungsi error middleware
 module.exports = { serverError, notFound, handleError };
