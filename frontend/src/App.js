@@ -52,7 +52,7 @@ function App() {
         />
         <Route path="/instruction" element={<InstructionPage />} />
         <Route path="/about" element={<About />} />
-        <Route path="/read" element={<ComingSoonPage />} />
+        <Route path="/comingSoon" element={<ComingSoonPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
