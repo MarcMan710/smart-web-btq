@@ -57,11 +57,11 @@ const Profile = () => {
     <div className="flex flex-col items-center text-nblack4">
       <h1 className="font-bold text-4xl mb-4">Profil</h1>
 
-      <div className="relative cursor-pointer">
+      <div className="relative cursor-pointer mb-4">
         <div className="absolute rounded-full w-[8rem] h-[8rem] hover:bg-nblack4/20"></div>
         <img
           src={potrait}
-          className="mb-4 w-[8rem] h-[8rem] object-cover rounded-full border-solid border-2 border-nblack4"
+          className=" bg-[#ffdfc6] w-[8rem] h-[8rem] object-cover rounded-full border-solid border-2 border-nblack4"
         ></img>
         <div className="rounded-full bg-nblue4 absolute bottom-4 right-1 p-1">
           <svg
