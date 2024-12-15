@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const HistoryPage = () => {
   const [recordings, setRecordings] = useState([]);
@@ -35,7 +36,7 @@ const HistoryPage = () => {
     <div className="flex flex-col items-center text-nblack4">
       <h1 className="text-4xl font-bold mb-4">Riwayat</h1>
 
-      <div className="bg-nwhite2 w-[60ch] px-6 py-4 rounded-lg mb-20">
+      <div className="bg-nwhite2 w-[75ch] px-6 py-4 rounded-lg mb-20">
         <table className="w-full text-sm text-left">
           <thead>
             <tr className="border-b-[1px] border-nblack1/30">
@@ -43,6 +44,7 @@ const HistoryPage = () => {
               <th className="px-4 py-2">Nilai</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">Waktu</th>
+              <th className="px-4 py-2">Audio</th>
             </tr>
           </thead>
           <tbody>
@@ -66,6 +68,21 @@ const HistoryPage = () => {
                       minute: "2-digit",
                       second: "2-digit",
                     })}
+                  </td>
+                  <td className="px-4 py-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="size-6 cursor-pointer"
+                      onClick={() => toast.warning("Fitur dalam pengembangan")}
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                   </td>
                 </tr>
               ))}
