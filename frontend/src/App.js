@@ -16,6 +16,7 @@ import InstructionPage from "./pages/InstructionPage";
 import PrivateRoute from "./components/PrivateRoute";
 import About from "./pages/About";
 import ComingSoonPage from "./pages/ComingSoonPage";
+import ReadingPage from "./pages/ReadingPage";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/read" element={<ReadingPage />} />
         <Route path="/instruction" element={<InstructionPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/comingSoon" element={<ComingSoonPage />} />
