@@ -138,7 +138,7 @@ const Dashboard = () => {
               className="items-center flex justify-between space-x-6 bg-gradient-to-r from-norange/30 to-norange/70 rounded-md p-4 w-full cursor-pointer mb-4"
               onClick={() => navigate("/read")}
             >
-              <h2 className="text-sm font-bold">Surah Al-Baqarah</h2>
+              <h2 className="text-sm font-bold">Surah Al-Fatihah</h2>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -151,7 +151,7 @@ const Dashboard = () => {
 
             <div
               className="flex items-center justify-between space-x-6 bg-gradient-to-r from-norange/30 to-norange/70 rounded-md p-4 w-full cursor-pointer mb-4"
-              onClick={() => navigate("/read")}
+              onClick={() => navigate("/comingSoon")}
             >
               <h2 className="text-sm font-bold">Surah Al-Mulk</h2>
               <svg
@@ -166,7 +166,7 @@ const Dashboard = () => {
 
             <div
               className="flex items-center justify-between space-x-6 bg-gradient-to-r from-norange/30 to-norange/70 rounded-md p-4 w-full cursor-pointer"
-              onClick={() => navigate("/read")}
+              onClick={() => navigate("/comingSoon")}
             >
               <h2 className="text-sm font-bold">Surah Yasin</h2>
               <svg
